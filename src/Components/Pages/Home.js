@@ -1,11 +1,21 @@
 import React from "react";
 import NavBar from "../Nav";
 import "./home.css";
-import {  useNavigate } from "react-router-dom";
-import { MDBBtn } from 'mdb-react-ui-kit';
+import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
+import ProductData from "../ProductData";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBBtn,
+} from "mdb-react-ui-kit";
 
 const Home = () => {
-  const btnNavigation=useNavigate()
+  const btnNavigation = useNavigate();
+  const homeItems= ProductData
   return (
     <div>
       <NavBar />
@@ -29,17 +39,45 @@ const Home = () => {
             tempor imperdiet arcu arcu ut nunc in dictum mauris at ut.
           </p>
           <div className="shop-btn">
-          <MDBBtn outline color='light' onClick={()=>btnNavigation('/Men')} className="m-2">
-         Shop Men
-      </MDBBtn>
-          <MDBBtn outline color='light'onClick={()=>btnNavigation('/Woman')}  className="m-2">
-         Shop Woman
-      </MDBBtn>
-           
-           
+            <MDBBtn
+              outline
+              color="light"
+              onClick={() => btnNavigation("/Men")}
+              className="m-2"
+              id="mhovbtn"
+            >
+              Shop Men
+            </MDBBtn>
+            <MDBBtn
+              outline
+              color="light"
+              onClick={() => btnNavigation("/Woman")}
+              className="m-2"
+              id="mhovbtn2"
+            >
+              Shop Woman
+            </MDBBtn>
           </div>
         </div>
       </div>
+<div className="homeItem">
+<h4>Collection</h4>
+<div className="productsItem">
+  {homeItems.map((products)=>{
+    return(
+      <MDBCard style={{ width: "20em" }}>
+      <MDBCardImage src={products.image} position="top" alt="..." />
+      <MDBCardBody>
+        <MDBCardTitle>{products.name}</MDBCardTitle>
+        <MDBCardText>${products.price}</MDBCardText>
+        <MDBBtn onClick={() =>  btnNavigation("/Cart")}>Add to Cart</MDBBtn>
+      </MDBCardBody>
+    </MDBCard>
+    )
+  })}
+</div>
+</div>
+      <Footer />
     </div>
   );
 };

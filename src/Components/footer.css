@@ -1,0 +1,22 @@
+.footer-bdr{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 250px;
+    background-color: black;
+    padding-top: 50px;
+    margin-left: 50px ;
+    margin-right: 50px;
+    color: white;
+}
+.footer-bdr2{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 70px;
+    align-items: center;
+}
+.footer-bdr a{
+    color: white;
+}

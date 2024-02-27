@@ -5,9 +5,24 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { FaCartPlus } from "react-icons/fa";
 import { RiContactsFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ProductData from "./ProductData";
+import { useContext, useState } from "react";
+import myContext from "../UseContext/Context";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBBtn,
+} from "mdb-react-ui-kit";
+
 
 function NavBar() {
+  const {setSearch}=useContext(myContext)
+  const termsNavigate=useNavigate()
+
   return (
     <>
     <div>
@@ -52,9 +67,14 @@ function NavBar() {
                 type="search"
                 placeholder="Search"
                 className="me-2"
-                aria-label="Search"
+                aria-label="Search" 
+                onChange={(e)=>{setSearch(e.target.value)}}
+                onClick={()=>termsNavigate("/collection")}
               />
             </Form>
+            <div>
+         
+            </div>
             <div className="nav-left">
               
             <Link to={'/Ourstory'} style={{textDecoration:'none',color:'black',fontWeight:'bold'}}>OUR STORY</Link>
@@ -67,6 +87,7 @@ function NavBar() {
         </Container>
       </Navbar>
       </div>
+    
     </>
   );
 }

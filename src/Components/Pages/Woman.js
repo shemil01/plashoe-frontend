@@ -10,6 +10,7 @@ import {
   MDBCardImage,
   MDBBtn,
 } from "mdb-react-ui-kit";
+import Footer from '../Footer';
 
 
 const Woman = () => {
@@ -35,7 +36,9 @@ console.log(data)
         );
       })}
       </div>
+      <Footer />
       </div>
+      
   )
 }
 

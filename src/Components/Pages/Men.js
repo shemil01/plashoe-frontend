@@ -10,6 +10,7 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
 
 const Men = () => {
   const itemNavigate = useNavigate();
@@ -33,6 +34,7 @@ const Men = () => {
         );
       })}
       </div>
+      <Footer />
     </div>
   );
 };
