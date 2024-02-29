@@ -10,28 +10,38 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 import myContext from "../../UseContext/Context";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const loginNavigate = useNavigate();
-  const { formValue } = useContext(myContext);
-  const [loginValue, setLoginValue] = useState({ email: "", password: "" });
+  const { formValue, userData, email, setEmail, setLog, log } =
+    useContext(myContext);
 
-  const handleChange = (e) => {
-    const { name, value } =e.target;
-    setLoginValue({ ...loginValue, [name]: value });
-  };
+  console.log(userData);
+  const [value, setvalue] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = (e) => {
-    if (!loginValue.email || !loginValue.password) {
-      alert("Please fill in the input");
-    } else if (loginValue.email === formValue.email && loginValue.password === formValue.password) {
-      loginNavigate('/');
+    e.preventDefault();
+
+    if (!value || !password) {
+      alert("Please fill email and password ");
+      return;
+    }
+
+    let UserDetail = userData.find(
+      (user) => user.password === password && user.email === value
+    );
+    if (UserDetail == undefined) {
+      toast.error("User not found");
     } else {
-      alert("User not found");
+      toast.success("Login successful");
+      loginNavigate("/");
+      setEmail(value);
+      setLog(true);
     }
   };
-    
-    
-  
+
   return (
     <>
       <div className="sign-item">
@@ -58,8 +68,8 @@ const Login = () => {
                     id="form1"
                     type="email"
                     name="email"
-                    value={loginValue.email}
-                    onChange={handleChange}
+                    value={value}
+                    onChange={(e) => setvalue(e.target.value)}
                   />
                   <MDBInput
                     wrapperClass="mb-4"
@@ -67,8 +77,8 @@ const Login = () => {
                     id="form2"
                     type="password"
                     name="password"
-                    value={loginValue.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
 
                   <MDBBtn className="mb-4 w-100 gradient-custom-2">
@@ -82,7 +92,12 @@ const Login = () => {
 
               <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
                 <p className="mb-0">Don't have an account?</p>
-                <MDBBtn outline className="mx-2" color="danger" onClick={()=>loginNavigate('/signup')} >
+                <MDBBtn
+                  outline
+                  className="mx-2"
+                  color="danger"
+                  onClick={() => loginNavigate("/signup")}
+                >
                   REGISER
                 </MDBBtn>
               </div>

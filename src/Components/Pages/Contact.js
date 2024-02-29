@@ -1,8 +1,10 @@
 import React from 'react'
+import UseTitle from '../Custum/CustumHook';
 import NavBar from '../Nav'
 import { MDBInput, MDBCheckbox, MDBBtn } from 'mdb-react-ui-kit';
 
 const Contact = () => {
+  UseTitle('Contact')
   return (
     <div>
         <NavBar/>

@@ -16,15 +16,30 @@ import { useNavigate } from "react-router-dom";
 import myContext from "../../UseContext/Context";
 
 const Signup = () => {
- const {formValue,setFormValue}=useContext(myContext)
+  const signNavigate = useNavigate();
+  const { userData, setUserData } = useContext(myContext);
   const [formError, setFormError] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const signNavigate = useNavigate();
+  const initialValues = { username: "", email: "", password: "" };
+  const [formValue, setFormValue] = useState(initialValues);
 
+  if (!userData) {
+    setUserData([]);
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
     console.log(formValue);
+  };
+
+  const datasStore = () => {
+    userData.push({
+      username: formValue.username,
+      password: formValue.password,
+      email: formValue.email,
+    });
+    //
+    setUserData(userData.slice());
   };
 
   const handleSubmit = (e) => {
@@ -33,8 +48,9 @@ const Signup = () => {
     setFormError(validate(formValue));
     setIsSubmit(true);
     if (Object.keys(errors).length === 0) {
+      datasStore();
       signNavigate("/login");
-    }
+    } 
   };
 
   useEffect(() => {
@@ -71,10 +87,10 @@ const Signup = () => {
 
     return errors;
   };
+  console.log("userData:", userData);
 
   return (
     <div>
-    
       <MDBContainer fluid>
         <MDBCard className="text-black m-5" style={{ borderRadius: "25px" }}>
           <MDBCardBody>

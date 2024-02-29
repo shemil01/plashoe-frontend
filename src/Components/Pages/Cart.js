@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../Nav";
 import myContext from "../../UseContext/Context";
+import UseTitle from "../Custum/CustumHook";
 import {
   MDBBtn,
   MDBCard,
@@ -15,8 +16,11 @@ import {
 } from "mdb-react-ui-kit";
 
 const Cart = () => {
+  UseTitle('Cart')
+  window.localStorage.setItem("isLogedIn", true);
+
   const navigate = useNavigate();
-  const { cart, setCart, addCart, log } = useContext(myContext);
+  const { cart, setCart, log } = useContext(myContext);
 
   const updateQuantity = (itemId, amount) => {
     const updateCart = cart.map((item) =>
@@ -57,7 +61,7 @@ const Cart = () => {
                       </MDBTypography>
                       <div className="flex-shrink-0">
                         <p>
-                          {cart.length} item{cart.length !== 1 ? "s" : ""} in
+                          {cart.length} item{cart.length !== 1 ? "S" : ""} in
                           your cart
                         </p>
                       </div>
@@ -101,7 +105,7 @@ const Cart = () => {
                                     <p className="lead d-flex fw-normal mb-0">
                                       {" "}
                                       {quantity || 1}{" "}
-                                    </p>{" "}
+                                    </p>
                                     <button
                                       className="plus"
                                       onClick={() => updateQuantity(id, 1)}
@@ -152,15 +156,10 @@ const Cart = () => {
                         block
                         size="lg"
                         onClick={() => {
-                          if (cart.length == 0) {
-                            alert("your cart is empty");
+                          if (cart.length === 0) {
+                            alert("Your cart is empty");
                           } else {
-                            if (!log) {
-                              alert("login to continue");
-                              navigate("/login");
-                            } else {
-                              navigate("/payment");
-                            }
+                            navigate("/payment");
                           }
                         }}
                       >
@@ -170,10 +169,9 @@ const Cart = () => {
                       <MDBTypography
                         tag="h5"
                         className="fw-bold mb-5"
-                        style={{  bottom: "0" }}
+                        style={{ bottom: "0" }}
                       >
-
-                      <Link to={"/collection"}  > Back to shopping</Link>
+                        <Link to={"/collection"}> Back to shopping</Link>
                       </MDBTypography>
                     </MDBCol>
                   </MDBRow>

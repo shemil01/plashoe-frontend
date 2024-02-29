@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "../Nav";
 import ProductData from "../ProductData";
+import UseTitle from "../Custum/CustumHook";
 import {
   MDBCard,
   MDBCardBody,
@@ -13,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 
 const Men = () => {
+  UseTitle("Men")
   const itemNavigate = useNavigate();
   const items = ProductData;
   const menItem = items.filter((item) => item.gender === 'Men');

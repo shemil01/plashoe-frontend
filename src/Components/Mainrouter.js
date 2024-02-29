@@ -14,29 +14,39 @@ import Cart from "./Pages/Cart";
 import myContext from "../UseContext/Context";
 import ProductData from "./ProductData";
 import Payment from "./Pages/Payment";
+import UserData from "./Datas/UserData";
+import AdminForm from "./Pages/Admin/adminForm";
+import AdminHome from "./Pages/Admin/AdminHome";
+import { Toaster } from "react-hot-toast";
+
 
 const Mainrouter = () => {
   const [search, setSearch] = useState("");
   const [cart, setCart] = useState([]);
+  const [userData, setUserData] = useState(UserData);
   const [productData, setProductData] = useState(ProductData);
-  const initialValues = { username: "", email: "", password: "" };
-  const [formValue, setFormValue] = useState(initialValues);
-  const [log,setLog] = useState()
+  
+  const [email, setEmail] = useState("");
+  const [log, setLog] = useState();
+
   const details = {
     search,
     setSearch,
     productData,
     setProductData,
-    formValue,
-    setFormValue,
     cart,
     setCart,
+    userData,
+    setUserData,
     log,
-    setLog
+    setLog,
+    email,
+    setEmail,
   };
 
   return (
     <div>
+      <Toaster/>
       <myContext.Provider value={details}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -50,7 +60,10 @@ const Mainrouter = () => {
           <Route path="/ourstory" element={<Ourstory />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
-          <Route  path="/payment" element={<Payment/>} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/adminform" element={<AdminForm/>} />
+          <Route path="/adminhome" element={<AdminHome/>} />
+
         </Routes>
       </myContext.Provider>
     </div>

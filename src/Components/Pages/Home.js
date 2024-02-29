@@ -4,6 +4,7 @@ import "./home.css";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import ProductData from "../ProductData";
+import UseTitle from "../Custum/CustumHook";
 import {
   MDBCard,
   MDBCardBody,
@@ -14,6 +15,7 @@ import {
 } from "mdb-react-ui-kit";
 
 const Home = () => {
+  UseTitle("Home")
   const btnNavigation = useNavigate();
   const homeItems= ProductData
   return (

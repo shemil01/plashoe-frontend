@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import UseTitle from "../Custum/CustumHook";
 import NavBar from "../Nav";
 import {
   MDBCard,
@@ -11,11 +12,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import myContext from "../../UseContext/Context";
+import toast from "react-hot-toast";
 
 const Collection = () => {
-  const mapNavigate = useNavigate();
-  const {search,productData,cart,setCart}=useContext(myContext)
-  const [proData,setProdata]=useState(productData)
+  UseTitle('collection')
+  const navigate = useNavigate();
+  const { search, productData, cart, setCart, log } = useContext(myContext);
+  const [proData, setProdata] = useState(productData);
 
   const searchFilter = useCallback(
     (itemname) => {
@@ -28,23 +31,28 @@ const Collection = () => {
     },
     [search]
   );
-  
-useEffect(()=>{
-  searchFilter(productData)
-},[search,productData,searchFilter])
 
-const AddToCart = (datas) => {
-  const itemIndex = cart.findIndex((item) => item.id === datas.id);
+  useEffect(() => {
+    searchFilter(productData);
+  }, [search, productData, searchFilter]);
 
-  if (itemIndex !== -1) {
-    const updatedCart = [...cart];
-    updatedCart[itemIndex].quantity = (updatedCart[itemIndex].quantity || 1) + 1;
-    setCart(updatedCart);
-  } else {
-    setCart([...cart, { ...datas, quantity: 1 }]);
-  }
-};
+  const AddToCart = (datas) => {
+    if (!log) {
+      toast.error("Please login and continue");
+      navigate("/login");
+    } else {
+      const itemIndex = cart.findIndex((item) => item.id === datas.id);
 
+      if (itemIndex !== -1) {
+        const updatedCart = [...cart];
+        updatedCart[itemIndex].quantity =
+          (updatedCart[itemIndex].quantity || 1) + 1;
+        setCart(updatedCart);
+      } else {
+        setCart([...cart, { ...datas, quantity: 1 }]);
+      }
+    }
+  };
 
   return (
     <div>
@@ -63,9 +71,7 @@ const AddToCart = (datas) => {
               <MDBCardBody>
                 <MDBCardTitle>{product.name}</MDBCardTitle>
                 <MDBCardText>${product.price}</MDBCardText>
-                <MDBBtn onClick={() =>AddToCart (product)}>
-                  Add to Cart
-                </MDBBtn>
+                <MDBBtn onClick={() => AddToCart(product)}>Add to Cart</MDBBtn>
               </MDBCardBody>
             </MDBCard>
           );
