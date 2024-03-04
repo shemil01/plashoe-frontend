@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../Nav";
 import myContext from "../../UseContext/Context";
 import UseTitle from "../Custum/CustumHook";
+import toast from "react-hot-toast";
 import {
   MDBBtn,
   MDBCard,
@@ -17,7 +18,7 @@ import {
 
 const Cart = () => {
   UseTitle('Cart')
-  window.localStorage.setItem("isLogedIn", true);
+  // window.localStorage.setItem("isLogedIn", true);
 
   const navigate = useNavigate();
   const { cart, setCart, log } = useContext(myContext);
@@ -157,7 +158,7 @@ const Cart = () => {
                         size="lg"
                         onClick={() => {
                           if (cart.length === 0) {
-                            alert("Your cart is empty");
+                            toast.error("Your cart is empty");
                           } else {
                             navigate("/payment");
                           }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MDBBtn,MDBCol, MDBInput, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Payment = () => {
     const [paymentValue,setPaymentValue] =useState({number:'',name:'',expiration:'',cvv:''})
@@ -15,7 +16,7 @@ const Payment = () => {
       if (!paymentValue.number || !paymentValue.name || !paymentValue.cvv) {
         alert("Please fill in the input");
       } else {
-        alert('Payment successfully compleated!')
+        toast.success('Payment successfull!')
         navigate('/')
       } 
     };

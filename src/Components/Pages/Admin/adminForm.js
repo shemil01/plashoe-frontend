@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import {
   MDBBtn,
   MDBContainer,
@@ -13,18 +14,19 @@ import AdminDetails from "./AdminDetails";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const AdminForm = () => {
-    const [email,setEmail] = useState('')
+    const [Email,setEmail] = useState('')
     const [password,setPassword] = useState('')
-    const admin = AdminDetails
+    const admin = AdminDetails[ 0]
    const Navigate=useNavigate()
-   console.log(admin)
+ 
 
     const handleSubmit=()=>{
-if(admin.email ===email && admin.password === password){
-    alert("Login succesfully")
-    Navigate('/adminhome')
+if(admin.email == Email && admin.password == password){
+  console.log(Email)
+    toast.success("Login succesfully")
+    Navigate('/adiminnav')
 }else{
-    alert('enter a valid email and password')
+    toast.error('enter a valid email and password')
 }
     }
   return (
@@ -39,17 +41,17 @@ if(admin.email ===email && admin.password === password){
               <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
                 <h2 className="fw-bold mb-2 text-uppercase">Admin</h2>
 
-                <MDBInput
+                <MDBInput style={{color:"white"}}
                   wrapperClass="mb-4 mx-5 w-100"
                   labelClass="text-white"
                   label="Email address"
                   id="formControlLg"
                   type="email"
                   size="lg"
-                  value={email}
+                  value={Email}
                   onChange={(e)=>setEmail(e.target.value)}
                 />
-                <MDBInput
+                <MDBInput style={{color:"white"}}
                   wrapperClass="mb-4 mx-5 w-100"
                   labelClass="text-white"
                   label="Password"

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 import "./register.css";
 import {
@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 
 const Login = () => {
   const loginNavigate = useNavigate();
-  const { formValue, userData, email, setEmail, setLog, log } =
+  const {  userData, setEmail, setLog ,log } =
     useContext(myContext);
 
   console.log(userData);
@@ -23,16 +23,18 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+if(log){
+  toast.error("you have already account")
+}else{
     if (!value || !password) {
-      alert("Please fill email and password ");
+      toast.error("Please fill email and password ");
       return;
     }
 
     let UserDetail = userData.find(
       (user) => user.password === password && user.email === value
     );
-    if (UserDetail == undefined) {
+    if (UserDetail === undefined) {
       toast.error("User not found");
     } else {
       toast.success("Login successful");
@@ -40,6 +42,7 @@ const Login = () => {
       setEmail(value);
       setLog(true);
     }
+  }
   };
 
   return (

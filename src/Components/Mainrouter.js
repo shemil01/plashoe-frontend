@@ -18,6 +18,9 @@ import UserData from "./Datas/UserData";
 import AdminForm from "./Pages/Admin/adminForm";
 import AdminHome from "./Pages/Admin/AdminHome";
 import { Toaster } from "react-hot-toast";
+import UserInfo from "./Pages/Admin/AllUsers";
+import AdminNav from "./Pages/Admin/Nav/AdminNav";
+import Product from "./Pages/Admin/Product";
 
 
 const Mainrouter = () => {
@@ -25,7 +28,6 @@ const Mainrouter = () => {
   const [cart, setCart] = useState([]);
   const [userData, setUserData] = useState(UserData);
   const [productData, setProductData] = useState(ProductData);
-  
   const [email, setEmail] = useState("");
   const [log, setLog] = useState();
 
@@ -63,6 +65,9 @@ const Mainrouter = () => {
           <Route path="/payment" element={<Payment />} />
           <Route path="/adminform" element={<AdminForm/>} />
           <Route path="/adminhome" element={<AdminHome/>} />
+          <Route path="/allusers" element={<UserInfo/>} />
+          <Route path="/adiminnav"  element={<AdminNav/>} />
+          <Route path="/product" element={<Product />} />
 
         </Routes>
       </myContext.Provider>

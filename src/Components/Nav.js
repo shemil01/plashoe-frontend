@@ -50,11 +50,7 @@ function NavBar() {
                 <Nav.Link>
                   <Link
                     to={"/Men"}
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      fontWeight: "bold",
-                    }}
+                    className="navhover"
                   >
                     MEN
                   </Link>
@@ -62,11 +58,7 @@ function NavBar() {
                 <Nav.Link>
                   <Link
                     to={"/woman"}
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      fontWeight: "bold",
-                    }}
+                    className="navhover"
                   >
                     WOMAN
                   </Link>
@@ -74,11 +66,7 @@ function NavBar() {
                 <Nav.Link>
                   <Link
                     to={"/Collection"}
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      fontWeight: "bold",
-                    }}
+                    className="navhover"
                   >
                     COLLECTION
                   </Link>
@@ -86,11 +74,7 @@ function NavBar() {
                 <Nav.Link>
                   <Link
                     to={"/Lookbook"}
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      fontWeight: "bold",
-                    }}
+                    className="navhover"
                   >
                     LOOKBOOK
                   </Link>
@@ -98,11 +82,7 @@ function NavBar() {
                 <Nav.Link>
                   <Link
                     to={"/Sale"}
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      fontWeight: "bold",
-                    }}
+                    className="navhover"
                   >
                     SALE
                   </Link>
@@ -124,42 +104,27 @@ function NavBar() {
               <div className="nav-left">
                 <Link
                   to={"/Ourstory"}
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
+                  className="navhover"
                 >
                   OUR STORY
                 </Link>
                 <Link
                   to={"/Contact"}
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
+                  className="navhover"
                 >
                   CONTACT
                 </Link>
                 <Link
                   to={"/Cart"}
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
+                  className="navhover"
                 >
                   <FaCartPlus />
                   <span>{cart.length}</span>
                 </Link>
                 <Link
                   to={"/Login"}
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
+                  className="navhover"
+                  
                 >
                   <RiContactsFill />
                 </Link>
