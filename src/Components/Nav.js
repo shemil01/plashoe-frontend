@@ -116,14 +116,14 @@ function NavBar() {
                 </Link>
                 <Link
                   to={"/Cart"}
-                  className="navhover"
+                  className="icons"
                 >
                   <FaCartPlus />
                   <span>{cart.length}</span>
                 </Link>
                 <Link
                   to={"/Login"}
-                  className="navhover"
+                  className="icons"
                   
                 >
                   <RiContactsFill />

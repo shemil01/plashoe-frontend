@@ -1,26 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import AdminNav from './Nav/AdminNav'
+import React from 'react';
+import AdminNav from './Nav/AdminNav';
 
 const AdminHome = () => {
   return (
     <div>
-      <AdminNav/>
+      <AdminNav />
       <div
-      className="container"
-      style={{
-        backgroundImage: `url(https://media.gq.com/photos/62fd4d84bf2d3eb83a432b85/16:9/w_2560%2Cc_limit/nike-lede-full.jpg)`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100%",
-        width:'100%',
-        height:'100vw'
-      }}
-    >
-      <h1>Home</h1>
+        style={{
+          backgroundImage: `url('https://images.footlocker.com/content/dam/final/footfockerasiapacific/site/homepage/2021/australia/dct-launch/category-page-hero-s/20201221-fl-nike-brand-page-m-asp%201.jpg')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          height: '100vh',
+          marginLeft: '50px',
+          width:'100%',
+          display: 'flex',
+          justifyContent: 'center',
+          color: 'black',
+        }}
+      >
+        <h1>Home</h1>
+      </div>
     </div>
-      <Link to={'/allusers'}>User</Link>
-    </div>
-  )
-}
+  );
+};
 
-export default AdminHome
+export default AdminHome;

@@ -30,6 +30,8 @@ const Mainrouter = () => {
   const [productData, setProductData] = useState(ProductData);
   const [email, setEmail] = useState("");
   const [log, setLog] = useState();
+  const [adminLog,setAdminLog] = useState()
+  const [adminEmail,setAdminEmail]=useState('')
 
   const details = {
     search,
@@ -44,6 +46,10 @@ const Mainrouter = () => {
     setLog,
     email,
     setEmail,
+    adminLog,
+    setAdminLog,
+    adminEmail,
+    setAdminEmail
   };
 
   return (

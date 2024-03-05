@@ -19,17 +19,17 @@ const UserInfo = () => {
 
       <AdminNav/>
     </div>
-    <MDBTable align="middle" style={{backgroundColor:"GrayText",color:'white',marginLeft:'200px'}}>
+    <MDBTable align="middle" style={{backgroundColor:"GrayText",color:'white',marginLeft:'200px',width:'1330px'}}>
       <MDBTableHead>
         <tr>
           <th scope="col">No</th>
           <th scope="col">User</th>
           <th scope="col">UserName</th>
           <th scope="col">Email</th>
-          <th scope="col">Password</th>
+         
         </tr>
       </MDBTableHead>
-      <MDBTableBody>
+      <MDBTableBody >
         {userData.map((user, index) => {
           return (
             <tr key={index.id}>
@@ -60,12 +60,9 @@ const UserInfo = () => {
                   {user.email}
                 </MDBBadge>
               </td>
-              <td>{user.password}</td>
-              <td>
-                <MDBBtn color="link" rounded size="sm">
-                  Edit
-                </MDBBtn>
-              </td>
+             
+              {/* <td>{user.password}</td> */}
+              
             </tr>
           );
         })}

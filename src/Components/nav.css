@@ -25,11 +25,14 @@
            
    }
    .navhover{
-    color: #abb8c3;
+    
+    color:#54595F ;
     text-decoration: none;
     font-weight: bold;
    }
 .navhover:hover{
-    
-    color:#54595F ;
+    color: #abb8c3;
+}
+.icons{
+    color:black
 }

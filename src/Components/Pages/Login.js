@@ -46,12 +46,12 @@ if(log){
   };
 
   return (
-    <>
-      <div className="sign-item">
-        <MDBContainer className="my-5 gradient-form">
-          <MDBRow>
-            <MDBCol col="6" className="mb-5">
-              <div className="d-flex flex-column ms-5">
+    
+      <div className="sign-item d-flex justify-content-center"  style={{backgroundImage:`url(https://static.nike.com/a/images/w_1920,c_limit/5413be7e-44cb-4fe1-bf60-88ba5f72381b/the-best-white-sneakers-by-nike.jpg)` ,color:'black'}}>
+        <MDBContainer className="my-5 gradient-form px-auto">
+          <MDBRow className="px-auto">
+            <MDBCol className="mb-5 col-6 mx-auto">
+              <div className="d-flex flex-column">
                 <div className="text-center">
                   <img
                     src="https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/cropped-favicon-180x180.png"
@@ -106,11 +106,10 @@ if(log){
               </div>
             </MDBCol>
 
-            <MDBCol col="6" className="mb-5"></MDBCol>
           </MDBRow>
         </MDBContainer>
       </div>
-    </>
+    
   );
 };
 

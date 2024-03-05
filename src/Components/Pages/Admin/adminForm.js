@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import {
   MDBBtn,
@@ -12,23 +12,29 @@ import {
 } from "mdb-react-ui-kit";
 import AdminDetails from "./AdminDetails";
 import { Navigate, useNavigate } from "react-router-dom";
+import myContext from "../../../UseContext/Context";
 
 const AdminForm = () => {
-    const [Email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
-    const admin = AdminDetails[ 0]
-   const Navigate=useNavigate()
- 
+  const [loginEmail, setLoginEmail] = useState([]);
+  const {adminLog,setAdminLog,setAdminEmail } = useContext(myContext);
+  const [password, setPassword] = useState("");
+  const admin = AdminDetails[0];
+  const Navigate = useNavigate();
 
-    const handleSubmit=()=>{
-if(admin.email == Email && admin.password == password){
-  console.log(Email)
-    toast.success("Login succesfully")
-    Navigate('/adiminnav')
-}else{
-    toast.error('enter a valid email and password')
-}
+  const handleSubmit = () => {
+    if (adminLog) {
+      toast.error("You have already loged in");
+    } else {
+      if (admin.email == loginEmail && admin.password == password) {
+        toast.success("Login succesfully");
+        Navigate("/adminhome");
+        setAdminLog(true);
+        setAdminEmail(loginEmail)
+      } else {
+        toast.error("enter a valid email and password");
+      }
     }
+  };
   return (
     <div>
       <MDBContainer fluid>
@@ -41,17 +47,19 @@ if(admin.email == Email && admin.password == password){
               <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
                 <h2 className="fw-bold mb-2 text-uppercase">Admin</h2>
 
-                <MDBInput style={{color:"white"}}
+                <MDBInput
+                  style={{ color: "white" }}
                   wrapperClass="mb-4 mx-5 w-100"
                   labelClass="text-white"
                   label="Email address"
                   id="formControlLg"
                   type="email"
                   size="lg"
-                  value={Email}
-                  onChange={(e)=>setEmail(e.target.value)}
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
                 />
-                <MDBInput style={{color:"white"}}
+                <MDBInput
+                  style={{ color: "white" }}
                   wrapperClass="mb-4 mx-5 w-100"
                   labelClass="text-white"
                   label="Password"
@@ -59,10 +67,16 @@ if(admin.email == Email && admin.password == password){
                   type="password"
                   size="lg"
                   value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <MDBBtn outline className="mx-2 px-5" color="white" size="lg" onClick={handleSubmit}>
+                <MDBBtn
+                  outline
+                  className="mx-2 px-5"
+                  color="white"
+                  size="lg"
+                  onClick={handleSubmit}
+                >
                   Login
                 </MDBBtn>
 

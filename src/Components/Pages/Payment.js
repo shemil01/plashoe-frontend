@@ -14,7 +14,7 @@ const Payment = () => {
 
     const handleSubmit = (e) => {
       if (!paymentValue.number || !paymentValue.name || !paymentValue.cvv) {
-        alert("Please fill in the input");
+        toast.error("Please fill in the input");
       } else {
         toast.success('Payment successfull!')
         navigate('/')
@@ -23,7 +23,7 @@ const Payment = () => {
       
   return (
     
-    <div>
+    <div style={{display:"flex",justifyContent:'center'}}>
       <MDBCol lg="5" className="px-5 py-4">
         <MDBTypography
           tag="h3"
@@ -83,6 +83,7 @@ const Payment = () => {
                 value={paymentValue.cvv}
                 onChange={handleChange}
               />
+              <img class="alignnone size-full wp-image-508" src="https://websitedemos.net/recycled-shoe-store/wp-content/uploads/sites/983/2021/11/payment-icons.png" alt="" width="246" height="20"></img>
             </MDBCol>
             <MDBBtn>Proceed To Buy</MDBBtn>
           </MDBRow>

@@ -3,6 +3,7 @@ import myContext from "../../../UseContext/Context";
 import Modal from "react-bootstrap/Modal";
 import "./Product.css";
 import AdminNav from "./Nav/AdminNav";
+import toast from "react-hot-toast";
 import {
   MDBCard,
   MDBCardBody,
@@ -29,21 +30,32 @@ const Product = () => {
     name: "",
     image: "",
     price: "",
+    id: "",
   });
 
-
   const handleEditSubmit = () => {
-    
+    if (!editProduct.name || !editProduct.price) {
+      toast.error("Please fill in both name and price fields");
+      return;
+    }
+
     const updatedProductData = productData.map((item) =>
       item.id === editProduct.id ? editProduct : item
     );
+
     setProductData(updatedProductData);
     setShowEdit(false);
+    setEditProduct({
+      name: "",
+      image: "",
+      price: "",
+      id: "",
+    });
   };
 
   const handleAddSubmit = () => {
     if (!addProduct.name || !addProduct.image || !addProduct.price) {
-      alert("Please fill all inputs");
+      toast.error("Please fill all inputs");
     } else {
       const newId = productData.length + 1;
       const newProduct = { ...addProduct, id: newId };
@@ -99,7 +111,13 @@ const Product = () => {
               <MDBCardBody>
                 <MDBCardTitle>{value.name}</MDBCardTitle>
                 <MDBCardText>${value.price}</MDBCardText>
-                <MDBBtn className="m-2" onClick={() => setShowEdit(true)}>
+                <MDBBtn
+                  className="m-2"
+                  onClick={() => {
+                    setShowEdit(true);
+                    setEditProduct({ ...editProduct, id: value.id });    
+                  }}
+                >
                   Edit
                 </MDBBtn>
                 <MDBBtn

@@ -17,25 +17,33 @@ import {
 } from "mdb-react-ui-kit";
 
 const Cart = () => {
-  UseTitle('Cart')
+  UseTitle("Cart");
   // window.localStorage.setItem("isLogedIn", true);
 
   const navigate = useNavigate();
   const { cart, setCart, log } = useContext(myContext);
 
   const updateQuantity = (itemId, amount) => {
-    const updateCart = cart.map((item) =>
-      itemId === item.id
-        ? { ...item, quantity: (item.quantity || 1) + amount }
-        : item
-    );
-    setCart(updateCart);
+    if(!log){
+      setCart([])
+    }else{
+
+      const updateCart = cart.map((item) =>
+        itemId === item.id
+          ? { ...item, quantity: (item.quantity || 1) + amount }
+          : item
+      );    
+       
+      setCart(updateCart); 
+    }
+    
   };
   const deleteItem = (itemId) => {
     const updatedCart = cart.filter((item) => item.id !== itemId);
     setCart(updatedCart);
   };
 
+  
   const total = cart
     .reduce((val, item) => val + item.price * (item.quantity || 1), 0)
     .toFixed(2);

@@ -1,21 +1,36 @@
-import React from 'react'
-import {Link} from "react-router-dom"
+import React, { useContext } from 'react'
+import {Link, useNavigate} from "react-router-dom"
 import "./AdminNav.css"
+import { BiLogOutCircle } from "react-icons/bi";
 import AdminDetails from '../AdminDetails'
+import myContext from '../../../../UseContext/Context';
 
 
 const AdminNav = () => {
-    const data = AdminDetails[0]
-  return (
-    <div className="sidenav">
-        <span>{data.image}</span>
-        <span>{data.email}</span>
-    <Link to="/">Home</Link>
-    <Link to={'/product'}>products</Link>
-    <Link to="/allusers">Users</Link>
-   
-  </div>
-  )
-}
+  const navigate = useNavigate();
+  const {adminLog, setAdminLog, setAdminEmail } = useContext(myContext);
+  const data = AdminDetails[0];
 
-export default AdminNav
+  const adminLogout = () => {
+    setAdminLog(false);
+    setAdminEmail(''); 
+    navigate('/')
+    
+  };
+
+  return (
+    
+    <div className="sidenav">
+      {adminLog ?(<span>{data.email}</span>):null}
+     
+      
+      <button onClick={adminLogout}><BiLogOutCircle /></button>
+      <Link to="/">Home</Link>
+      <Link to={'/product'}>Products</Link>
+      <Link to="/allusers">Users</Link>
+    </div>
+    
+  );
+};
+
+export default AdminNav;
