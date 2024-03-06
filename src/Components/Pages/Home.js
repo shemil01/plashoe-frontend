@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavBar from "../Nav";
 import "./home.css";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
-import ProductData from "../ProductData";
 import UseTitle from "../Custum/CustumHook";
 import {
   MDBCard,
@@ -13,11 +12,13 @@ import {
   MDBCardImage,
   MDBBtn,
 } from "mdb-react-ui-kit";
+import myContext from "../../UseContext/Context";
 
 const Home = () => {
+  const {productData}=useContext(myContext)
   UseTitle("Home")
   const btnNavigation = useNavigate();
-  const homeItems= ProductData
+  const homeItems= productData
   return (
     <div>
       <NavBar />

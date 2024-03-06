@@ -12,16 +12,18 @@ import { TbLogout } from "react-icons/tb";
 import { SiAdminer } from "react-icons/si";
 
 function NavBar() {
-  const { setSearch, cart, setLog, email, setEmail } = useContext(myContext);
+  const { setSearch, cart, setLog, email, setEmail, log, setCart } =
+    useContext(myContext);
   const Navigate = useNavigate();
   const Logout = () => {
     setEmail("");
     setLog("");
+    setCart([]);
     Navigate("/");
   };
   return (
     <>
-      <div>
+      <div className="navbarRespons">
         <div className="nav-one p-1">
           <p>Free Express Shipping on all orders with all duties included</p>
         </div>
@@ -44,46 +46,32 @@ function NavBar() {
             >
               <Nav
                 className="me-auto my-lg-0"
-                style={{ maxHeight: "100px" }}
                 navbarScroll
+                style={{ maxHeight: "100px" }}
+               
               >
                 <Nav.Link>
-                  <Link
-                    to={"/Men"}
-                    className="navhover"
-                  >
+                  <Link to={"/Men"} className="navhover">
                     MEN
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link
-                    to={"/woman"}
-                    className="navhover"
-                  >
+                  <Link to={"/woman"} className="navhover">
                     WOMAN
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link
-                    to={"/Collection"}
-                    className="navhover"
-                  >
+                  <Link to={"/Collection"} className="navhover">
                     COLLECTION
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link
-                    to={"/Lookbook"}
-                    className="navhover"
-                  >
+                  <Link to={"/Lookbook"} className="navhover">
                     LOOKBOOK
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link
-                    to={"/Sale"}
-                    className="navhover"
-                  >
+                  <Link to={"/Sale"} className="navhover">
                     SALE
                   </Link>
                 </Nav.Link>
@@ -100,38 +88,28 @@ function NavBar() {
                   onClick={() => Navigate("/collection")}
                 />
               </Form>
-              <div></div>
+
               <div className="nav-left">
-                <Link
-                  to={"/Ourstory"}
-                  className="navhover"
-                >
+                <Link to={"/Ourstory"} className="navhover">
                   OUR STORY
                 </Link>
-                <Link
-                  to={"/Contact"}
-                  className="navhover"
-                >
+                <Link to={"/Contact"} className="navhover">
                   CONTACT
                 </Link>
-                <Link
-                  to={"/Cart"}
-                  className="icons"
-                >
+                <Link to={"/Cart"} className="icons">
                   <FaCartPlus />
                   <span>{cart.length}</span>
                 </Link>
-                <Link
-                  to={"/Login"}
-                  className="icons"
-                  
-                >
+                <Link to={"/Login"} className="icons">
                   <RiContactsFill />
                 </Link>
-                <button onClick={Logout}>
-                  <TbLogout />
-                </button>
+                {log && (
+                  <button onClick={Logout}>
+                    <TbLogout />
+                  </button>
+                )}
                 <Link to={"/adminform"}>
+                  {}
                   <SiAdminer />
                 </Link>
               </div>

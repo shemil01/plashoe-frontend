@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavBar from "../Nav";
-import ProductData from "../ProductData";
 import UseTitle from "../Custum/CustumHook";
 import {
   MDBCard,
@@ -12,11 +11,13 @@ import {
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
+import myContext from "../../UseContext/Context";
 
 const Men = () => {
+  const {productData}=useContext(myContext)
   UseTitle("Men")
   const itemNavigate = useNavigate();
-  const items = ProductData;
+  const items = productData;
   const menItem = items.filter((item) => item.gender === 'Men');
   console.log(menItem)
   return (

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import myContext from "../../../UseContext/Context";
 import Modal from "react-bootstrap/Modal";
+import {Link} from 'react-router-dom'
 import "./Product.css";
 import AdminNav from "./Nav/AdminNav";
 import toast from "react-hot-toast";
@@ -26,12 +27,7 @@ const Product = () => {
     id: "",
   });
 
-  const [addProduct, setAddProduct] = useState({
-    name: "",
-    image: "",
-    price: "",
-    id: "",
-  });
+  const [addProduct, setAddProduct] = useState({});
 
   const handleEditSubmit = () => {
     if (!editProduct.name || !editProduct.price) {
@@ -82,15 +78,16 @@ const Product = () => {
     <>
       <AdminNav />
       <div className="productNav">
-        <button onClick={() => setFilterType("All collection")}>
+        <Link onClick={() => setFilterType("All collection")}>
           All collection
-        </button>
+        </Link>
 
-        <button onClick={() => setFilterType("Men")}>Men</button>
+        <Link onClick={() => setFilterType("Men")}>Men</Link>
+ 
 
-        <button onClick={() => setFilterType("Women")}>Woman</button>
+        <Link onClick={() => setFilterType("Women")}>Woman</Link>
 
-        <button onClick={() => setShowAdd(true)}>AddProduct</button>
+        <Link onClick={() => setShowAdd(true)}>AddProduct</Link>
       </div>
       <div
         className="modal show"
@@ -138,7 +135,7 @@ const Product = () => {
           </Modal.Header>
           <Modal.Body>
             <MDBInput
-              style={{ color: "white" }}
+              style={{ color: "black" }}
               wrapperClass="mb-4 "
               labelClass="text-black"
               label="image"
@@ -147,11 +144,12 @@ const Product = () => {
               size="lg"
               value={addProduct.image}
               onChange={(e) =>
-                setAddProduct({ ...addProduct, image: e.target.value })
+                setAddProduct({ ...addProduct, image: e.target.value },
+                  )
               }
             />
             <MDBInput
-              style={{ color: "white" }}
+              style={{ color: "black" }}
               wrapperClass="mb-4"
               labelClass="text-black"
               label="name"
@@ -164,7 +162,7 @@ const Product = () => {
               }
             />
             <MDBInput
-              style={{ color: "white" }}
+              style={{ color: "black" }}
               wrapperClass="mb-4"
               labelClass="text-black"
               label="price"
@@ -194,7 +192,7 @@ const Product = () => {
           </Modal.Header>
           <Modal.Body>
             <MDBInput
-              style={{ color: "white" }}
+              style={{ color: "black" }}
               wrapperClass="mb-4 "
               labelClass="text-black"
               label="image"
@@ -207,7 +205,7 @@ const Product = () => {
               }
             />
             <MDBInput
-              style={{ color: "white" }}
+              style={{ color: "black" }}
               wrapperClass="mb-4"
               labelClass="text-black"
               label="name"
@@ -220,7 +218,7 @@ const Product = () => {
               }
             />
             <MDBInput
-              style={{ color: "white" }}
+              style={{ color: "black" }}
               wrapperClass="mb-4"
               labelClass="text-black"
               label="price"

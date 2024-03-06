@@ -8,20 +8,11 @@
     
   }
   
-  /* .productNav a {
+  .productNav a {
     text-decoration: none;
     color: white;
     
-  } */
-  .productNav button{
-   
-    color: white;
-    background-color: #333;
-    
   }
-  
- 
-  
    @media (max-width: 600px) {
     .productNav {
       flex-direction: column;

@@ -24,26 +24,23 @@ const Cart = () => {
   const { cart, setCart, log } = useContext(myContext);
 
   const updateQuantity = (itemId, amount) => {
-    if(!log){
-      setCart([])
-    }else{
-
+    if (!log) {
+      setCart([]);
+    } else {
       const updateCart = cart.map((item) =>
         itemId === item.id
           ? { ...item, quantity: (item.quantity || 1) + amount }
           : item
-      );    
-       
-      setCart(updateCart); 
+      );
+
+      setCart(updateCart);
     }
-    
   };
   const deleteItem = (itemId) => {
     const updatedCart = cart.filter((item) => item.id !== itemId);
     setCart(updatedCart);
   };
 
-  
   const total = cart
     .reduce((val, item) => val + item.price * (item.quantity || 1), 0)
     .toFixed(2);
@@ -52,12 +49,12 @@ const Cart = () => {
     <>
       <NavBar />
       <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
-        <MDBContainer className="h-100 py-5">
+        <MDBContainer className="h-100 py-5 ">
           <MDBRow className="justify-content-center align-items-center h-100">
             <MDBCol>
               <MDBCard
-                className="shopping-cart"
-                style={{ borderRadius: "15px" }}
+                className="shopping-cart bg-secondary"
+                style={{ borderRadius: "15px",width:'45rem' }}
               >
                 <MDBCardBody className="text-black">
                   <MDBRow>
@@ -70,7 +67,7 @@ const Cart = () => {
                       </MDBTypography>
                       <div className="flex-shrink-0">
                         <p>
-                          {cart.length} item{cart.length !== 1 ? "S" : ""} in
+                          {cart.length} item{cart.length == 0 ? "" : "s"} in
                           your cart
                         </p>
                       </div>
@@ -105,22 +102,22 @@ const Cart = () => {
                                   </p>
 
                                   <div className="def-number-input number-input safari_only">
-                                    <button
+                                  <MDBBtn
                                       className="minus"
                                       onClick={() => updateQuantity(id, -1)}
                                     >
                                       -
-                                    </button>
+                                    </MDBBtn>
                                     <p className="lead d-flex fw-normal mb-0">
                                       {" "}
                                       {quantity || 1}{" "}
                                     </p>
-                                    <button
+                                    <MDBBtn
                                       className="plus"
                                       onClick={() => updateQuantity(id, 1)}
                                     >
                                       +
-                                    </button>
+                                    </MDBBtn>
                                   </div>
                                 </div>
                               </div>
@@ -150,18 +147,20 @@ const Cart = () => {
                                   ${(price * (quantity || 1)).toFixed(2)}
                                 </MDBTypography>
                               </div>
-                              <button
-                                className="plus"
+                              <div><MDBBtn
+                                className="bg-danger m-2"
                                 onClick={() => deleteItem(id)}
                               >
                                 Delete
-                              </button>
+                              </MDBBtn>
+                              </div>
                             </div>
                           );
                         })}
                       </div>
 
                       <MDBBtn
+                     
                         block
                         size="lg"
                         onClick={() => {

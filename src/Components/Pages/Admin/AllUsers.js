@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import myContext from "../../../UseContext/Context";
 import AdminNav from "./Nav/AdminNav";
 
@@ -13,6 +13,7 @@ import {
 
 const UserInfo = () => {
   const { userData } = useContext(myContext);
+  const [blockUser,setBolockUser]=useState()
   return (
     <>
     <div>
@@ -58,6 +59,11 @@ const UserInfo = () => {
               <td>
                 <MDBBadge color="primary" pill>
                   {user.email}
+                </MDBBadge>
+              </td>
+              <td>
+                <MDBBadge color="primary" pill onClick={()=>setBolockUser( )} >
+                  block
                 </MDBBadge>
               </td>
              
