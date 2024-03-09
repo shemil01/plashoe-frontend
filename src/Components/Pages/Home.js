@@ -4,6 +4,7 @@ import "./home.css";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import UseTitle from "../Custum/CustumHook";
+import toast from "react-hot-toast";
 import {
   MDBCard,
   MDBCardBody,
@@ -15,10 +16,47 @@ import {
 import myContext from "../../UseContext/Context";
 
 const Home = () => {
-  const {productData}=useContext(myContext)
+  const {productData,logedUser,setLogedUser,userData,setUserData,log}=useContext(myContext)
   UseTitle("Home")
-  const btnNavigation = useNavigate();
+  const navigate = useNavigate();
   const homeItems= productData
+
+  const AddToCart = (datas) => {
+    if (!log) {
+      toast.error("Please login and continue");
+      navigate("/login");
+    } else {
+      const itemIndex = logedUser.Cart.find((item) => item.id === datas.id);
+
+      if (itemIndex) {
+        setLogedUser({
+          ...logedUser,
+          Cart: logedUser.Cart.map((item) => {
+            return item.id === datas.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item;
+          }),
+        });
+        setUserData(
+          userData.map((item) =>
+            logedUser.email === item.email ? logedUser : item
+          )
+        );
+      } else {
+        setLogedUser({
+          ...logedUser,
+          Cart: [...logedUser.Cart, { ...datas, quantity: 1 }],
+        });
+        setUserData(
+          userData.map((item) =>
+            logedUser.email === item.email ? logedUser : item
+          )
+        );
+       
+      }
+    }
+  };
+
   return (
     <div>
       <NavBar />
@@ -45,7 +83,7 @@ const Home = () => {
             <MDBBtn
               outline
               color="light"
-              onClick={() => btnNavigation("/Men")}
+              onClick={() => navigate("/Men")}
               className="m-2"
               id="mhovbtn"
             >
@@ -54,7 +92,7 @@ const Home = () => {
             <MDBBtn
               outline
               color="light"
-              onClick={() => btnNavigation("/Woman")}
+              onClick={() => navigate("/Woman")}
               className="m-2"
               id="mhovbtn2"
             >
@@ -66,6 +104,10 @@ const Home = () => {
 <div className="homeItem">
 <h4>Collection</h4>
 <div className="productsItem">
+  
+
+
+
   {homeItems.map((products)=>{
     return(
       <MDBCard style={{ width: "20em" }}>
@@ -73,7 +115,7 @@ const Home = () => {
       <MDBCardBody>
         <MDBCardTitle>{products.name}</MDBCardTitle>
         <MDBCardText>${products.price}</MDBCardText>
-        <MDBBtn onClick={() =>  btnNavigation("/Cart")}>Add to Cart</MDBBtn>
+        <MDBBtn onClick={() =>  AddToCart(products)}>Add to Cart</MDBBtn>
       </MDBCardBody>
     </MDBCard>
     )

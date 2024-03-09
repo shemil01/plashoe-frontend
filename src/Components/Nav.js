@@ -12,13 +12,13 @@ import { TbLogout } from "react-icons/tb";
 import { SiAdminer } from "react-icons/si";
 
 function NavBar() {
-  const { setSearch, cart, setLog, email, setEmail, log, setCart } =
+  const { setSearch, setLog, email, setEmail, log, logedUser, setLogedUser } =
     useContext(myContext);
   const Navigate = useNavigate();
   const Logout = () => {
     setEmail("");
     setLog("");
-    setCart([]);
+    setLogedUser({});
     Navigate("/");
   };
   return (
@@ -48,7 +48,6 @@ function NavBar() {
                 className="me-auto my-lg-0"
                 navbarScroll
                 style={{ maxHeight: "100px" }}
-               
               >
                 <Nav.Link>
                   <Link to={"/Men"} className="navhover">
@@ -98,7 +97,7 @@ function NavBar() {
                 </Link>
                 <Link to={"/Cart"} className="icons">
                   <FaCartPlus />
-                  <span>{cart.length}</span>
+                  <span>{logedUser?.Cart?.length}</span>
                 </Link>
                 <Link to={"/Login"} className="icons">
                   <RiContactsFill />

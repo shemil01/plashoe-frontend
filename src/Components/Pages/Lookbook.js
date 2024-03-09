@@ -37,7 +37,7 @@ const Lookbook = () => {
 </p>
      </div>
 <div  className="col-12 pt-4 main-image pe-5 ps-5">
-  <img  style={{backgroundPosition:'50%' , backgroundSize:'cover',height:'40rem',width:'1400px'}} src="https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/recycled-shoe-store-lookbook-cover-image-2.jpg" alt="" />
+  <img  style={{backgroundPosition:'50%' , backgroundSize:'cover',height:'40rem',width:'1400px'}}src="https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/recycled-shoe-store-lookbook-cover-image-2.jpg" alt="" />
 </div>
 <div>
   <h1>Adventurer Gear</h1>
@@ -49,5 +49,5 @@ Elementum donec leo vulputate sit proin suspendisse <br/>malesuada neque proin g
       </div>
   )
 }
-
+  
 export default Lookbook

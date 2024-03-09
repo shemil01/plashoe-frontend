@@ -25,8 +25,9 @@ import Product from "./Pages/Admin/Product";
 
 const Mainrouter = () => {
   const [search, setSearch] = useState("");
-  const [cart, setCart] = useState([]);
+  const [cart,setCart] =useState([])
   const [userData, setUserData] = useState(UserData);
+  const [logedUser,setLogedUser] = useState({})
   const [productData, setProductData] = useState(ProductData);
   const [email, setEmail] = useState("");
   const [log, setLog] = useState();
@@ -38,8 +39,7 @@ const Mainrouter = () => {
     setSearch,
     productData,
     setProductData,
-    cart,
-    setCart,
+   cart,setCart,
     userData,
     setUserData,
     log,
@@ -49,7 +49,8 @@ const Mainrouter = () => {
     adminLog,
     setAdminLog,
     adminEmail,
-    setAdminEmail
+    setAdminEmail,
+    logedUser,setLogedUser
   };
 
   return (

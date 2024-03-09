@@ -15,9 +15,17 @@ import myContext from "../../UseContext/Context";
 import toast from "react-hot-toast";
 
 const Collection = () => {
-  UseTitle('collection')
+  UseTitle("collection");
   const navigate = useNavigate();
-  const { search, productData, cart, setCart, log } = useContext(myContext);
+  const {
+    search,
+    productData,
+    log,
+    userData,
+    setUserData,
+    logedUser,
+    setLogedUser,
+  } = useContext(myContext);
   const [proData, setProdata] = useState(productData);
 
   const searchFilter = useCallback(
@@ -41,15 +49,33 @@ const Collection = () => {
       toast.error("Please login and continue");
       navigate("/login");
     } else {
-      const itemIndex = cart.findIndex((item) => item.id === datas.id);
+      const itemIndex = logedUser.Cart.find((item) => item.id === datas.id);
 
-      if (itemIndex !== -1) {
-        const updatedCart = [...cart];
-        updatedCart[itemIndex].quantity =
-          (updatedCart[itemIndex].quantity || 1) + 1;
-        setCart(updatedCart);
+      if (itemIndex) {
+        setLogedUser({
+          ...logedUser,
+          Cart: logedUser.Cart.map((item) => {
+            return item.id === datas.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item;
+          }),
+        });
+        setUserData(
+          userData.map((item) =>
+            logedUser.email === item.email ? logedUser : item
+          )
+        );
       } else {
-        setCart([...cart, { ...datas, quantity: 1 }]);
+        setLogedUser({
+          ...logedUser,
+          Cart: [...logedUser.Cart, { ...datas, quantity: 1 }],
+        });
+        setUserData(
+          userData.map((item) =>
+            logedUser.email === item.email ? logedUser : item
+          )
+        );
+        // setUserData([...userData])
       }
     }
   };
@@ -66,7 +92,7 @@ const Collection = () => {
       >
         {proData.map((product) => {
           return (
-            <MDBCard style={{ width: "20em" }}>
+            <MDBCard style={{ width: "20em" }} key={product.id}>
               <MDBCardImage src={product.image} position="top" alt="..." />
               <MDBCardBody>
                 <MDBCardTitle>{product.name}</MDBCardTitle>

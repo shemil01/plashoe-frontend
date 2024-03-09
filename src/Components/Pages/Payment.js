@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MDBBtn,MDBCol, MDBInput, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import myContext from "../../UseContext/Context";
 
 const Payment = () => {
+  const {setCart} = useContext(myContext)
     const [paymentValue,setPaymentValue] =useState({number:'',name:'',expiration:'',cvv:''})
     const navigate=useNavigate()
     const handleChange=((e)=>{
@@ -18,6 +20,7 @@ const Payment = () => {
       } else {
         toast.success('Payment successfull!')
         navigate('/')
+        setCart([])
       } 
     };
       

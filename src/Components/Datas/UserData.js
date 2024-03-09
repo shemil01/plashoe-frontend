@@ -1,15 +1,19 @@
-const UserData=[
+const UserData = [
     {
-       username:'Shemil',
-       email: 'shemil@gmail.com',
-       password:'1234',
-       cart: []
+      id: 1,
+      username: 'Shemil',
+      email: 'shemil@gmail.com',
+      password: '1234',
+      Cart: []
     },
     {
-        username:'arshad',
-        email:'arshad@gmail.com',
-        password:'1234',
-        cart:[]
+      id: 2,
+      username: 'arshad',
+      email: 'arshad@gmail.com',
+      password: '1234',
+      Cart: []
     }
-]
-export default UserData
+  ];
+  
+  export default UserData;
+  

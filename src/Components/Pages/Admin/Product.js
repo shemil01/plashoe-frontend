@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import myContext from "../../../UseContext/Context";
 import Modal from "react-bootstrap/Modal";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import "./Product.css";
 import AdminNav from "./Nav/AdminNav";
 import toast from "react-hot-toast";
@@ -83,7 +83,6 @@ const Product = () => {
         </Link>
 
         <Link onClick={() => setFilterType("Men")}>Men</Link>
- 
 
         <Link onClick={() => setFilterType("Women")}>Woman</Link>
 
@@ -112,7 +111,7 @@ const Product = () => {
                   className="m-2"
                   onClick={() => {
                     setShowEdit(true);
-                    setEditProduct({ ...editProduct, id: value.id });    
+                    setEditProduct({ ...editProduct, id: value.id });
                   }}
                 >
                   Edit
@@ -144,8 +143,7 @@ const Product = () => {
               size="lg"
               value={addProduct.image}
               onChange={(e) =>
-                setAddProduct({ ...addProduct, image: e.target.value },
-                  )
+                setAddProduct({ ...addProduct, image: e.target.value })
               }
             />
             <MDBInput

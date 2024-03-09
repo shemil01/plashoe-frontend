@@ -20,7 +20,14 @@ const Signup = () => {
   const { userData, setUserData } = useContext(myContext);
   const [formError, setFormError] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const initialValues = { username: "", email: "", password: "" };
+  const initialValues = 
+  {username:'',
+  email:'',
+  password:'',
+  id:'',
+  Cart:[]
+
+}
   const [formValue, setFormValue] = useState(initialValues);
 
   if (!userData) {
@@ -37,8 +44,10 @@ const Signup = () => {
       username: formValue.username,
       password: formValue.password,
       email: formValue.email,
+      Cart:formValue.Cart,
+      id:formValue.id
     });
-    //
+    
     setUserData(userData.slice());
   };
 

@@ -62,7 +62,7 @@ const UserInfo = () => {
                 </MDBBadge>
               </td>
               <td>
-                <MDBBadge color="primary" pill onClick={()=>setBolockUser( )} >
+                <MDBBadge color="primary" pill >
                   block
                 </MDBBadge>
               </td>

@@ -21,29 +21,31 @@ const Cart = () => {
   // window.localStorage.setItem("isLogedIn", true);
 
   const navigate = useNavigate();
-  const { cart, setCart, log } = useContext(myContext);
+  const { logedUser, setLogedUser, userData, setUserData } =
+    useContext(myContext);
 
   const updateQuantity = (itemId, amount) => {
-    if (!log) {
-      setCart([]);
-    } else {
-      const updateCart = cart.map((item) =>
-        itemId === item.id
-          ? { ...item, quantity: (item.quantity || 1) + amount }
-          : item
-      );
+    const updateCart = logedUser?.Cart?.map((item) =>
+      itemId === item.id ? { ...item, quantity: item.quantity + amount } : item
+    );
 
-      setCart(updateCart);
-    }
+    setLogedUser({ ...logedUser, Cart: updateCart });
+    setUserData(
+      userData.map((item) =>
+        logedUser.email === item.email ? logedUser : item
+      )
+    );
   };
+
   const deleteItem = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
-    setCart(updatedCart);
+    const updatedCart = logedUser?.Cart?.filter((item) => item.id !== itemId);
+    setLogedUser({ ...logedUser, Cart: updatedCart });
   };
 
-  const total = cart
-    .reduce((val, item) => val + item.price * (item.quantity || 1), 0)
-    .toFixed(2);
+  const total = logedUser?.Cart.reduce(
+    (val, item) => val + item.price * (item.quantity || 1),
+    0
+  ).toFixed(2);
 
   return (
     <>
@@ -54,7 +56,7 @@ const Cart = () => {
             <MDBCol>
               <MDBCard
                 className="shopping-cart bg-secondary"
-                style={{ borderRadius: "15px",width:'45rem' }}
+                style={{ borderRadius: "15px", width: "45rem" }}
               >
                 <MDBCardBody className="text-black">
                   <MDBRow>
@@ -67,12 +69,12 @@ const Cart = () => {
                       </MDBTypography>
                       <div className="flex-shrink-0">
                         <p>
-                          {cart.length} item{cart.length == 0 ? "" : "s"} in
-                          your cart
+                          {logedUser?.Cart?.length} item
+                          {logedUser?.Cart?.length == 0 ? "" : "s"} in your cart
                         </p>
                       </div>
                       <div>
-                        {cart.map((value) => {
+                        {logedUser?.Cart?.map((value) => {
                           const { image, name, price, quantity, id } = value;
                           return (
                             <div className="d-flex align-items-center mb-5">
@@ -102,7 +104,7 @@ const Cart = () => {
                                   </p>
 
                                   <div className="def-number-input number-input safari_only">
-                                  <MDBBtn
+                                    <MDBBtn
                                       className="minus"
                                       onClick={() => updateQuantity(id, -1)}
                                     >
@@ -147,24 +149,25 @@ const Cart = () => {
                                   ${(price * (quantity || 1)).toFixed(2)}
                                 </MDBTypography>
                               </div>
-                              <div><MDBBtn
-                                className="bg-danger m-2"
-                                onClick={() => deleteItem(id)}
-                              >
-                                Delete
-                              </MDBBtn>
+                              <div>
+                                <MDBBtn
+                                  className="bg-danger m-2"
+                                  onClick={() => deleteItem(id)}
+                                >
+                                  Delete
+                                </MDBBtn>
                               </div>
                             </div>
                           );
                         })}
                       </div>
+                      <h4>Total:{total}</h4>
 
                       <MDBBtn
-                     
                         block
                         size="lg"
                         onClick={() => {
-                          if (cart.length === 0) {
+                          if (logedUser?.Cart?.length === 0) {
                             toast.error("Your cart is empty");
                           } else {
                             navigate("/payment");

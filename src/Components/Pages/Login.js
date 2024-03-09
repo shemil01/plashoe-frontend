@@ -13,38 +13,46 @@ import myContext from "../../UseContext/Context";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const loginNavigate = useNavigate();
-  const {  userData, setEmail, setLog ,log } =
+  const loginNavigate=useNavigate()
+  const { setUserData, userData, setEmail, setLog, log ,setLogedUser} =
     useContext(myContext);
 
-  console.log(userData);
   const [value, setvalue] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-if(log){
-  toast.error("you have already account")
-}else{
-    if (!value || !password) {
-      toast.error("Please fill email and password ");
-      return;
-    }
 
-    let UserDetail = userData.find(
-      (user) => user.password === password && user.email === value
-    );
-    if (UserDetail === undefined) {
-      toast.error("User not found");
+    if (log) {
+      toast.error("You already have an account");
     } else {
-      toast.success("Login successful");
-      loginNavigate("/");
-      setEmail(value);
-      setLog(true);
+      if (!value || !password) {
+        toast.error("Please fill in the email and password");
+        return;
+      }
+
+      let UserDetail = userData.find(
+        (user) => user.password === password && user.email === value
+      );
+
+      if (UserDetail === undefined) {
+        toast.error("User not found");
+      } else {
+        const { id, cart } = UserDetail;
+        setLogedUser(UserDetail)
+        toast.success("Login successful");
+        loginNavigate("/");
+        setEmail(value);
+        setLog(true);
+  
+        setUserData((prevUserData) =>
+        prevUserData.map((user) =>
+          user.email === value ? { ...user, id, cart } : user
+        )
+      );
     }
   }
-  };
-
+};
   return (
     
       <div className="sign-item d-flex justify-content-center"  style={{backgroundImage:`url(https://static.nike.com/a/images/w_1920,c_limit/5413be7e-44cb-4fe1-bf60-88ba5f72381b/the-best-white-sneakers-by-nike.jpg)` ,color:'black'}}>
