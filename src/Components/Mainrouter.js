@@ -21,41 +21,52 @@ import { Toaster } from "react-hot-toast";
 import UserInfo from "./Pages/Admin/AllUsers";
 import AdminNav from "./Pages/Admin/Nav/AdminNav";
 import Product from "./Pages/Admin/Product";
+import axios from "axios";
+import SuccessPage from "./Pages/success";
 
+import OrderDetails from "./Pages/Admin/Orders";
+import OrderById from "./Pages/Admin/orderById";
+import OrderTable from "./Datas/orderRecord";
+
+export const Axios = axios.create({
+  baseURL: "http://localhost:3010/api",
+});
 
 const Mainrouter = () => {
+  const [log,setLog]=useState(false)
   const [search, setSearch] = useState("");
-  const [cart,setCart] =useState([])
   const [userData, setUserData] = useState(UserData);
-  const [logedUser,setLogedUser] = useState({})
+  const [logedUser, setLogedUser] = useState({});
   const [productData, setProductData] = useState(ProductData);
   const [email, setEmail] = useState("");
-  const [log, setLog] = useState();
-  const [adminLog,setAdminLog] = useState()
-  const [adminEmail,setAdminEmail]=useState('')
+  const [adminData, setAdminData] = useState("");
+  const [adminLog, setAdminLog] = useState(false);
+  const [cartItem, setCartItem] = useState([]);
 
   const details = {
     search,
     setSearch,
     productData,
     setProductData,
-   cart,setCart,
     userData,
     setUserData,
-    log,
-    setLog,
     email,
     setEmail,
     adminLog,
     setAdminLog,
-    adminEmail,
-    setAdminEmail,
-    logedUser,setLogedUser
+    adminData,
+    setAdminData,
+    logedUser,
+    setLogedUser,
+    cartItem,
+    setCartItem,
+    log,
+    setLog
   };
 
   return (
     <div>
-      <Toaster/>
+      <Toaster />
       <myContext.Provider value={details}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -70,12 +81,15 @@ const Mainrouter = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/adminform" element={<AdminForm/>} />
-          <Route path="/adminhome" element={<AdminHome/>} />
-          <Route path="/allusers" element={<UserInfo/>} />
-          <Route path="/adiminnav"  element={<AdminNav/>} />
+          <Route path="/adminform" element={<AdminForm />} />
+          <Route path="/adminhome" element={<AdminHome />} />
+          <Route path="/allusers/" element={<UserInfo />} />
+          <Route path="/admin/orders" element={<OrderDetails/>} />
+          <Route path="/adiminnav" element={<AdminNav />} />
           <Route path="/product" element={<Product />} />
-
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/user/orders" element={<OrderTable />} />
+          <Route path="/admin/ordersid/:userId" element={<OrderById />} />
         </Routes>
       </myContext.Provider>
     </div>

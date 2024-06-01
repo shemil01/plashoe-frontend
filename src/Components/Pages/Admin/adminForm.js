@@ -10,30 +10,34 @@ import {
   MDBInput,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import AdminDetails from "./AdminDetails";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import myContext from "../../../UseContext/Context";
+import { Axios } from "../../Mainrouter";
 
 const AdminForm = () => {
-  const [loginEmail, setLoginEmail] = useState([]);
-  const {adminLog,setAdminLog,setAdminEmail } = useContext(myContext);
-  const [password, setPassword] = useState("");
-  const admin = AdminDetails[0];
+  // const [loginEmail, setLoginEmail] = useState([]);
+  const { setAdminData, setAdminLog } = useContext(myContext);
+  const [admin, setAdmin] = useState({
+    email: "",
+    password: "",
+  });
+  // const admin = AdminDetails[0];
   const Navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (adminLog) {
-      toast.error("You have already loged in");
-    } else {
-      if (admin.email == loginEmail && admin.password == password) {
-        toast.success("Login succesfully");
-        Navigate("/adminhome");
-        setAdminLog(true);
-        setAdminEmail(loginEmail)
-      } else {
-        toast.error("enter a valid email and password");
-      }
+    if (!admin) {
+      toast.error("Please fill all field");
     }
+    Axios.post("/admin/login", admin, { withCredentials: true })
+      .then((response) => {
+        toast.success(response.data.message);
+        setAdminData(admin);
+        setAdminLog(true);
+        Navigate("/adminhome");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   return (
     <div>
@@ -55,8 +59,10 @@ const AdminForm = () => {
                   id="formControlLg"
                   type="email"
                   size="lg"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
+                  value={admin.email}
+                  onChange={(e) =>
+                    setAdmin({ ...admin, email: e.target.value })
+                  }
                 />
                 <MDBInput
                   style={{ color: "white" }}
@@ -66,8 +72,10 @@ const AdminForm = () => {
                   id="formControlLg"
                   type="password"
                   size="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={admin.password}
+                  onChange={(e) =>
+                    setAdmin({ ...admin, password: e.target.value })
+                  }
                 />
 
                 <MDBBtn

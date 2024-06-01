@@ -10,17 +10,25 @@ import { useContext, useState } from "react";
 import myContext from "../UseContext/Context";
 import { TbLogout } from "react-icons/tb";
 import { SiAdminer } from "react-icons/si";
+import Cookies from "js-cookie";
 
 function NavBar() {
-  const { setSearch, setLog, email, setEmail, log, logedUser, setLogedUser } =
-    useContext(myContext);
+  const {
+    setSearch,
+    setLog,
+    email,
+
+    log,
+
+    cartItem,
+  } = useContext(myContext);
   const Navigate = useNavigate();
-  const Logout = () => {
-    setEmail("");
-    setLog("");
-    setLogedUser({});
-    Navigate("/");
-  };
+
+  const logout=()=>{
+    Cookies.remove("token")
+   setLog(false)
+  }
+
   return (
     <>
       <div className="navbarRespons">
@@ -97,16 +105,21 @@ function NavBar() {
                 </Link>
                 <Link to={"/Cart"} className="icons">
                   <FaCartPlus />
-                  <span>{logedUser?.Cart?.length}</span>
+                  <span>{cartItem.length}</span>
                 </Link>
-                <Link to={"/Login"} className="icons">
-                  <RiContactsFill />
-                </Link>
-                {log && (
-                  <button onClick={Logout}>
-                    <TbLogout />
-                  </button>
+
+                {!log && (
+                  <Link to={"/Login"} className="icons">
+                    <RiContactsFill />
+                  </Link>
                 )}
+
+                {log && (
+                 
+                    <TbLogout  onClick={() => logout()}/>
+                  
+                )}
+
                 <Link to={"/adminform"}>
                   {}
                   <SiAdminer />

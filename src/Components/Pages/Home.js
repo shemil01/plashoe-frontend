@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../Nav";
 import "./home.css";
 import { useNavigate } from "react-router-dom";
@@ -14,47 +14,38 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import myContext from "../../UseContext/Context";
+import { Axios } from "../Mainrouter";
 
 const Home = () => {
-  const {productData,logedUser,setLogedUser,userData,setUserData,log}=useContext(myContext)
-  UseTitle("Home")
+  const { logedUser, setLogedUser, userData, setUserData, log } =
+    useContext(myContext);
+  const [product, setProduct] = useState([]);
+  UseTitle("Home");
   const navigate = useNavigate();
-  const homeItems= productData
+  // const homeItems= productData
 
-  const AddToCart = (datas) => {
-    if (!log) {
-      toast.error("Please login and continue");
+  useEffect(() => {
+    Axios.get("/user/product", {
+      withCredentials: true,
+    })
+      .then((response) => {
+        setProduct(response.data);
+      })
+      .catch((error) => {
+        console.error("Product fetching error", error);
+      });
+  }, []);
+
+  const AddToCart = async (product) => {
+    await Axios.post(
+      "/user/addcart",
+      { productId: product._id },
+
+      { withCredentials: true }
+    ).catch((error) => {
+      toast.error("please login and continue");
       navigate("/login");
-    } else {
-      const itemIndex = logedUser.Cart.find((item) => item.id === datas.id);
-
-      if (itemIndex) {
-        setLogedUser({
-          ...logedUser,
-          Cart: logedUser.Cart.map((item) => {
-            return item.id === datas.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item;
-          }),
-        });
-        setUserData(
-          userData.map((item) =>
-            logedUser.email === item.email ? logedUser : item
-          )
-        );
-      } else {
-        setLogedUser({
-          ...logedUser,
-          Cart: [...logedUser.Cart, { ...datas, quantity: 1 }],
-        });
-        setUserData(
-          userData.map((item) =>
-            logedUser.email === item.email ? logedUser : item
-          )
-        );
-       
-      }
-    }
+    });
   };
 
   return (
@@ -101,30 +92,27 @@ const Home = () => {
           </div>
         </div>
       </div>
-<div className="homeItem">
-<h4>Collection</h4>
-<div className="productsItem">
-  
-
-
-
-  {homeItems.map((products)=>{
-    return(
-      <MDBCard style={{ width: "20em" }}>
-      <MDBCardImage src={products.image} position="top" alt="..." />
-      <MDBCardBody>
-        <MDBCardTitle>{products.name}</MDBCardTitle>
-        <MDBCardText>${products.price}</MDBCardText>
-        <MDBBtn onClick={() =>  AddToCart(products)}>Add to Cart</MDBBtn>
-      </MDBCardBody>
-    </MDBCard>
-    )
-  })}
-</div>
-</div>
+      <div className="homeItem">
+        <h4>Collection</h4>
+        <div className="productsItem">
+          {product.map((products) => {
+            return (
+              <MDBCard style={{ width: "20em" }}>
+                <MDBCardImage src={products.image} position="top" alt="..." />
+                <MDBCardBody>
+                  <MDBCardTitle>{products.name}</MDBCardTitle>
+                  <MDBCardText>₹{products.price}</MDBCardText>
+                  <MDBBtn onClick={() => AddToCart(products)}>
+                    Add to Cart
+                  </MDBBtn>
+                </MDBCardBody>
+              </MDBCard>
+            );
+          })}
+        </div>
+      </div>
       <Footer />
     </div>
   );
 };
-
 export default Home;

@@ -20,7 +20,7 @@ const Payment = () => {
       } else {
         toast.success('Payment successfull!')
         navigate('/')
-        setCart([])
+        
       } 
     };
       

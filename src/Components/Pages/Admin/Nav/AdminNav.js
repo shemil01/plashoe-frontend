@@ -5,6 +5,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import AdminDetails from "../AdminDetails";
 import { RiAdminFill } from "react-icons/ri";
 import myContext from "../../../../UseContext/Context";
+import Cookies from "js-cookie";
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -13,25 +14,24 @@ const AdminNav = () => {
 
   const adminLogout = () => {
     setAdminLog(false);
-    setAdminEmail("");
+    Cookies.remove("token");
+    Cookies.remove("refreshToken");
     navigate("/");
   };
 
   return (
     <div className="sidenav">
       <RiAdminFill className="adminIcon" />
-<div style={{marginLeft:'30px'}}>
-      {adminLog ? <span>{data.name}</span> : null}
+      {/* <div style={{marginLeft:'30px'}}>
+      {adminLog ? <span>{data.email}</span> : null}
      
-      </div>
+      </div> */}
       <Link to="/">Home</Link>
       <Link to={"/product"}>Products</Link>
       <Link to="/allusers">Users</Link>
-      <div className="logoutBtn">
-        
-          <BiLogOutCircle  className="logoutIcon" onClick={adminLogout} /> Logout  
-       
-      </div>
+      <Link to={`/admin/orders`}>orders</Link>
+
+      <div className="logoutBtn"></div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../Nav";
 import UseTitle from "../Custum/CustumHook";
 import {
@@ -13,49 +13,36 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import toast from "react-hot-toast";
 import myContext from "../../UseContext/Context";
+import { Axios } from "../Mainrouter";
 
 const Men = () => {
   const { productData, log, logedUser, setLogedUser, userData, setUserData } =
     useContext(myContext);
-  UseTitle("Men");
-  const navigate = useNavigate();
-  const items = productData;
-  const menItem = items.filter((item) => item.gender === "Men");
+    UseTitle("Men");
+    const navigate = useNavigate();
+    // const items = productData;
+    // const menItem = items.filter((item) => item.gender === "Men");
+    const [menItem,setMenItem] = useState([]) 
 
-  const AddToCart = (datas) => {
-    if (!log) {
-      toast.error("Please login and continue");
-      navigate("/login");
-    } else {
-      const itemIndex = logedUser.Cart.find((item) => item.id === datas.id);
+useEffect(()=>{
+Axios.get("/user/category/men")
+.then((response)=>setMenItem(response.data))
+.catch((error)=>{console.error("Men item is empty",error)})
 
-      if (itemIndex) {
-        setLogedUser({
-          ...logedUser,
-          Cart: logedUser.Cart.map((item) => {
-            return item.id === datas.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item;
-          }),
-        });
-        setUserData(
-          userData.map((item) =>
-            logedUser.email === item.email ? logedUser : item
-          )
-        );
-      } else {
-        setLogedUser({
-          ...logedUser,
-          Cart: [...logedUser.Cart, { ...datas, quantity: 1 }],
-        });
-        setUserData(
-          userData.map((item) =>
-            logedUser.email === item.email ? logedUser : item
-          )
-        );
-      }
-    }
-  };
+},[])
+
+
+const AddToCart = async (product) => {
+  await Axios.post(
+    "/user/addcart",
+    { productId: product._id },
+
+    { withCredentials: true }
+  ).catch((error) => {
+    toast.error("please login and continue");
+    navigate("/login");
+  });
+};
   return (
     <div>
       <NavBar />
@@ -72,7 +59,7 @@ const Men = () => {
               <MDBCardImage src={item.image} position="top" alt="..." />
               <MDBCardBody>
                 <MDBCardTitle>{item.name}</MDBCardTitle>
-                <MDBCardText>${item.price}</MDBCardText>
+                <MDBCardText>₹{item.price}</MDBCardText>
                 <MDBBtn onClick={() => AddToCart(item)}>Add to Cart</MDBBtn>
               </MDBCardBody>
             </MDBCard>

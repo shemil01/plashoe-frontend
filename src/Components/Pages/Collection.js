@@ -14,70 +14,52 @@ import Footer from "../Footer";
 import myContext from "../../UseContext/Context";
 import toast from "react-hot-toast";
 
+import { Axios } from "../Mainrouter";
 const Collection = () => {
+ 
+  // const cartItems = useSelector((state) => state.cart.cartItems);
   UseTitle("collection");
-  const navigate = useNavigate();
-  const {
-    search,
-    productData,
-    log,
-    userData,
-    setUserData,
-    logedUser,
-    setLogedUser,
-  } = useContext(myContext);
-  const [proData, setProdata] = useState(productData);
 
-  const searchFilter = useCallback(
-    (itemname) => {
-      const result = itemname.filter((val) => {
-        return search === ""
-          ? val
-          : val.name.toLowerCase().includes(search.toLowerCase());
-      });
-      setProdata(result);
-    },
-    [search]
-  );
+  const { search,} = useContext(myContext);
+  const [proData, setProdata] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    searchFilter(productData);
-  }, [search, productData, searchFilter]);
-
-  const AddToCart = (datas) => {
-    if (!log) {
-      toast.error("Please login and continue");
-      navigate("/login");
-    } else {
-      const itemIndex = logedUser.Cart.find((item) => item.id === datas.id);
-
-      if (itemIndex) {
-        setLogedUser({
-          ...logedUser,
-          Cart: logedUser.Cart.map((item) => {
-            return item.id === datas.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item;
-          }),
+    async function Data() {
+      await Axios.get("/user/product")
+        .then((response) => {
+          if(search==""){setProdata(response.data)}
+          setProducts(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching Product", error);
         });
-        setUserData(
-          userData.map((item) =>
-            logedUser.email === item.email ? logedUser : item
-          )
-        );
-      } else {
-        setLogedUser({
-          ...logedUser,
-          Cart: [...logedUser.Cart, { ...datas, quantity: 1 }],
-        });
-        setUserData(
-          userData.map((item) =>
-            logedUser.email === item.email ? logedUser : item
-          )
-        );
-        // setUserData([...userData])
-      }
     }
+    Data();
+  }, []);
+
+  useEffect(() => {
+    const result=products.filter((element)=>{
+      return element.name.toLowerCase().includes(search.toLowerCase())
+    });
+    search===""?setProdata(products):setProdata(result)
+  }, [search]);
+
+
+
+  const AddToCart =async (product) => {
+   
+    await Axios.post("/user/addcart",
+      {productId:product._id},
+      
+      {withCredentials:true}
+    )
+.catch((error)=>{
+  toast.error("please login and continue")
+  // navigate("/login");
+})
+
+
   };
 
   return (
@@ -96,7 +78,7 @@ const Collection = () => {
               <MDBCardImage src={product.image} position="top" alt="..." />
               <MDBCardBody>
                 <MDBCardTitle>{product.name}</MDBCardTitle>
-                <MDBCardText>${product.price}</MDBCardText>
+                <MDBCardText>₹{product.price}</MDBCardText>
                 <MDBBtn onClick={() => AddToCart(product)}>Add to Cart</MDBBtn>
               </MDBCardBody>
             </MDBCard>

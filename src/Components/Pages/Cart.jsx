@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../Nav";
 import myContext from "../../UseContext/Context";
@@ -15,37 +15,82 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
+import { Axios } from "../Mainrouter";
 
 const Cart = () => {
   UseTitle("Cart");
-  // window.localStorage.setItem("isLogedIn", true);
 
   const navigate = useNavigate();
-  const { logedUser, setLogedUser, userData, setUserData } =
-    useContext(myContext);
+  const { logedUser, cartItem, setCartItem } = useContext(myContext);
+  useEffect(() => {
+    Axios.get("/user/viewCart", { withCredentials: true })
+      .then((response) => {
+        setCartItem(response.data.cart);
+      })
+      .catch((error) => {
+        console.error("Cart fetching error", error);
+      });
+  }, []);
 
-  const updateQuantity = (itemId, amount) => {
-    const updateCart = logedUser?.Cart?.map((item) =>
-      itemId === item.id ? { ...item, quantity: item.quantity + amount } : item
-    );
+  const decreaseQuantity = (itemId) => {
+    Axios.put(
+      `/user/decrease/${itemId.productId._id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    )
+      .then((response) => {
+        console.log(response.data);
 
-    setLogedUser({ ...logedUser, Cart: updateCart });
-    setUserData(
-      userData.map((item) =>
-        logedUser.email === item.email ? logedUser : item
-      )
-    );
+        setCartItem((prevItems) =>
+          prevItems.map((item) =>
+            item.productId._id === itemId.productId._id
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Cart decreasing error", error);
+      });
   };
 
-  const deleteItem = (itemId) => {
-    const updatedCart = logedUser?.Cart?.filter((item) => item.id !== itemId);
-    setLogedUser({ ...logedUser, Cart: updatedCart });
+  const deleteCart = (Cart) => {
+    Axios.delete(`/user/remove/${Cart.productId._id}`, {
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log(response.data);
+
+        setCartItem((prevItems) =>
+          prevItems.filter((item) => item.productId._id !== Cart.productId._id)
+        );
+      })
+      .catch((error) => {
+        console.error("Cart deleting error", error);
+      });
   };
 
-  const total = logedUser?.Cart.reduce(
-    (val, item) => val + item.price * (item.quantity || 1),
-    0
-  ).toFixed(2);
+  const orderItem = async () => {
+    if (cartItem.length > 0) {
+      await Axios.post("/user/order",{}, { withCredentials: true })
+        .then((response) => {
+          const   paymentLink = response.data;
+          window.open(paymentLink, "_blank");      
+          // setCartItem((prevItems) =>
+          //   prevItems.filter(
+          //     (item) => item.productId._id !== Cart.productId._id,
+             
+          //   )
+          // );
+          toast.success(response.data.message)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <>
@@ -69,18 +114,18 @@ const Cart = () => {
                       </MDBTypography>
                       <div className="flex-shrink-0">
                         <p>
-                          {logedUser?.Cart?.length} item
-                          {logedUser?.Cart?.length == 0 ? "" : "s"} in your cart
+                          {cartItem.length} item
+                          {cartItem.length === 0 && 1 ? "" : "s"} in your cart
                         </p>
                       </div>
                       <div>
-                        {logedUser?.Cart?.map((value) => {
-                          const { image, name, price, quantity, id } = value;
+                        {cartItem?.map((value) => {
+                          console.log("ID",value)
                           return (
                             <div className="d-flex align-items-center mb-5">
                               <div className="flex-shrink-0">
                                 <MDBCardImage
-                                  src={image}
+                                  src={value.productId.image}
                                   fluid
                                   style={{ width: "150px" }}
                                   alt="Generic placeholder image"
@@ -95,31 +140,27 @@ const Cart = () => {
                                   tag="h5"
                                   className="text-primary"
                                 >
-                                  {name}
+                                  {value.productId.name}
                                 </MDBTypography>
 
                                 <div className="d-flex align-items-center">
                                   <p className="fw-bold mb-0 me-5 pe-3">
-                                    ${price}
+                                    ₹{value.productId.price}
                                   </p>
 
                                   <div className="def-number-input number-input safari_only">
                                     <MDBBtn
                                       className="minus"
-                                      onClick={() => updateQuantity(id, -1)}
+                                      disabled={value.quantity === 1}
+                                      onClick={() => decreaseQuantity(value)}
                                     >
                                       -
                                     </MDBBtn>
                                     <p className="lead d-flex fw-normal mb-0">
                                       {" "}
-                                      {quantity || 1}{" "}
+                                      {value.quantity || 1}{" "}
                                     </p>
-                                    <MDBBtn
-                                      className="plus"
-                                      onClick={() => updateQuantity(id, 1)}
-                                    >
-                                      +
-                                    </MDBBtn>
+                                    <MDBBtn className="plus">+</MDBBtn>
                                   </div>
                                 </div>
                               </div>
@@ -146,32 +187,35 @@ const Cart = () => {
                                   tag="h5"
                                   className="fw-bold mb-0"
                                 >
-                                  ${(price * (quantity || 1)).toFixed(2)}
+                                  ₹
+                                  {(
+                                    value.productId.price *
+                                    (value.quantity || 1)
+                                  ).toFixed(2)}
                                 </MDBTypography>
                               </div>
                               <div>
                                 <MDBBtn
                                   className="bg-danger m-2"
-                                  onClick={() => deleteItem(id)}
+                                  onClick={() => deleteCart(value)}
                                 >
                                   Delete
                                 </MDBBtn>
+
+                           
                               </div>
                             </div>
                           );
                         })}
                       </div>
-                      <h4>Total:{total}</h4>
+                      {/* <h4>Total:{value.productId.price}</h4> */}
 
                       <MDBBtn
                         block
                         size="lg"
+                        disabled={cartItem.length === 0}
                         onClick={() => {
-                          if (logedUser?.Cart?.length === 0) {
-                            toast.error("Your cart is empty");
-                          } else {
-                            navigate("/payment");
-                          }
+                          orderItem();
                         }}
                       >
                         Buy now

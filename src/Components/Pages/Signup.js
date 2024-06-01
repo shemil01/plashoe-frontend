@@ -14,89 +14,74 @@ import {
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import myContext from "../../UseContext/Context";
+import toast from "react-hot-toast";
+import { Axios } from "../Mainrouter";
 
 const Signup = () => {
   const signNavigate = useNavigate();
   const { userData, setUserData } = useContext(myContext);
   const [formError, setFormError] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const initialValues = 
-  {username:'',
-  email:'',
-  password:'',
-  id:'',
-  Cart:[]
+  // const initialValues = {
+  //   name: " ",
+  //   email: " ",
+  //   password: " ",
+  //   confirmPass: "",
+  // };
+  const [formValue, setFormValue] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPass: "",
+  });
 
-}
-  const [formValue, setFormValue] = useState(initialValues);
-
-  if (!userData) {
-    setUserData([]);
-  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
-    console.log(formValue);
   };
+  // console.log(formValue);
 
-  const datasStore = () => {
-    userData.push({
-      username: formValue.username,
-      password: formValue.password,
-      email: formValue.email,
-      Cart:formValue.Cart,
-      id:formValue.id
-    });
-    
-    setUserData(userData.slice());
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    const errors = validate(formValue);
-    setFormError(validate(formValue));
-    setIsSubmit(true);
-    if (Object.keys(errors).length === 0) {
-      datasStore();
-      signNavigate("/login");
-    } 
-  };
 
-  useEffect(() => {
-    console.log(formError);
-    if (Object.keys(formError).length === 0 && isSubmit) {
-      console.log(formError);
-    }
-  }, [formError]);
-
-  const validate = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!values.username) {
-      errors.username = "Username is required";
+    if (formValue.name.trim() === "") {
+      errors.name = "Username is required";
     }
-    if (!values.email) {
+    if (formValue.email.trim() === "") {
       errors.email = "Email is required";
-    } else if (!regex.test(values.email)) {
+    } else if (!regex.test(formValue.email)) {
       errors.email = "this is not a valid email";
     }
-    if (!values.password) {
+    if (formValue.password.trim() === "") {
       errors.password = "password is required";
-    } else if (values.password.length < 4) {
+    } else if (formValue.password.length < 4) {
       errors.password = "Password must be less than 4 characters";
-    } else if (values.password.length > 10) {
+    } else if (formValue.password.length > 10) {
       errors.password = "Password must be less than 10 characters";
     }
-    if (!values.password1) {
-      errors.password1 = "password is required";
-    } else if (values.password1 !== values.password) {
-      errors.password1 = "Password is not match";
+    if (formValue.confirmPass.trim() === "") {
+      errors.confirmPass = "conform password is required";
+    } else if (formValue.confirmPass !== formValue.password) {
+      errors.confirmPass = "Password is not match";
     }
-
-    return errors;
+    setFormError(errors);
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await Axios.post("/user/register", formValue, {
+          withCredentials: true,
+        });
+        setUserData(formValue);
+        toast.success(response.data.message);
+        signNavigate('/');
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
+    }
+    
   };
-  console.log("userData:", userData);
 
   return (
     <div>
@@ -118,14 +103,13 @@ const Signup = () => {
                     <MDBInput
                       label="Your Name"
                       id="form1"
-                      name="username"
+                      name="name"
                       type="text"
                       className="w-100"
-                      value={formValue.username}
                       onChange={handleChange}
                     />
                   </div>
-                  <p className="text-danger">{formError.username}</p>
+                  <p className="text-danger">{formError.name}</p>
                   <div className="d-flex flex-row align-items-center mb-4">
                     <MDBIcon fas icon="envelope me-3" size="lg" />
                     <MDBInput
@@ -133,7 +117,6 @@ const Signup = () => {
                       id="form2"
                       name="email"
                       type="email"
-                      value={formValue.email}
                       onChange={handleChange}
                     />
                   </div>
@@ -145,7 +128,6 @@ const Signup = () => {
                       id="form3"
                       name="password"
                       type="password"
-                      value={formValue.password}
                       onChange={handleChange}
                     />
                   </div>
@@ -158,13 +140,12 @@ const Signup = () => {
                     <MDBInput
                       label="confirm Password"
                       id="form4"
-                      name="password1"
+                      name="confirmPass"
                       type="password"
-                      value={formValue.password1}
                       onChange={handleChange}
                     />
                   </div>
-                  <p className="text-danger">{formError.password1}</p>
+                  <p className="text-danger">{formError.confirmPass}</p>
                   <div className="d-flex flex-row align-items-center mb-4">
                     <MDBIcon fas icon="key me-3" size="lg" />
                   </div>
