@@ -33,14 +33,13 @@ export const Axios = axios.create({
 });
 
 const Mainrouter = () => {
-  const [log,setLog]=useState(false)
+  const [log, setLog] = useState(false);
   const [search, setSearch] = useState("");
   const [userData, setUserData] = useState(UserData);
-  const [logedUser, setLogedUser] = useState({});
   const [productData, setProductData] = useState(ProductData);
   const [email, setEmail] = useState("");
-  const [adminData, setAdminData] = useState("");
-  const [adminLog, setAdminLog] = useState(false);
+  // const [adminData, setAdminData] = useState("");
+  // const [adminLog, setAdminLog] = useState(false);
   const [cartItem, setCartItem] = useState([]);
 
   const details = {
@@ -52,16 +51,16 @@ const Mainrouter = () => {
     setUserData,
     email,
     setEmail,
-    adminLog,
-    setAdminLog,
-    adminData,
-    setAdminData,
-    logedUser,
-    setLogedUser,
+    // adminLog,
+    // setAdminLog,
+    // adminData,
+    // setAdminData,
+    // logedUser,
+    // setLogedUser,
     cartItem,
     setCartItem,
     log,
-    setLog
+    setLog,
   };
 
   return (
@@ -84,7 +83,7 @@ const Mainrouter = () => {
           <Route path="/adminform" element={<AdminForm />} />
           <Route path="/adminhome" element={<AdminHome />} />
           <Route path="/allusers/" element={<UserInfo />} />
-          <Route path="/admin/orders" element={<OrderDetails/>} />
+          <Route path="/admin/orders" element={<OrderDetails />} />
           <Route path="/adiminnav" element={<AdminNav />} />
           <Route path="/product" element={<Product />} />
           <Route path="/success" element={<SuccessPage />} />
