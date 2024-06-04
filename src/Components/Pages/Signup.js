@@ -75,6 +75,7 @@ const Signup = () => {
         });
         setUserData(formValue);
         toast.success(response.data.message);
+        console.log(response.data.message)
         signNavigate('/');
       } catch (error) {
         toast.error(error.response.data.message);
