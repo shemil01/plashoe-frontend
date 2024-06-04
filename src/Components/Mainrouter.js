@@ -14,7 +14,6 @@ import Cart from "./Pages/Cart";
 import myContext from "../UseContext/Context";
 import ProductData from "./ProductData";
 import Payment from "./Pages/Payment";
-import UserData from "./Datas/UserData";
 import AdminForm from "./Pages/Admin/adminForm";
 import AdminHome from "./Pages/Admin/AdminHome";
 import { Toaster } from "react-hot-toast";
@@ -30,9 +29,9 @@ import OrderTable from "./Datas/orderRecord";
 
 export const Axios = axios.create({
   baseURL: "https://backend-project-1-xcal.onrender.com/api",
-  headers: {
-    Authorization: Cookies.get("token"),
-  },
+  // headers: {
+  //   Authorization: Cookies.get("token"),
+  // },
 });
 
 const Mainrouter = () => {

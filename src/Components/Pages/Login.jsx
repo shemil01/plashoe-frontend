@@ -11,6 +11,7 @@ import {
 } from "mdb-react-ui-kit";
 import myContext from "../../UseContext/Context";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 import { Axios } from "../Mainrouter";
 
 const Login = () => {
@@ -32,6 +33,11 @@ const Login = () => {
     })
       .then((response) => {
         // console.log(response.data);
+        const { token, userData } = response.data;
+        Cookies.set("token", token, { expires: 1 });
+        localStorage.setItem("token", token);
+        const userInfo = JSON.stringify(userData);
+        localStorage.setItem("userInfo", userInfo);
         toast.success(response.data.message);
         loginNavigate("/");
         setLog(true)
