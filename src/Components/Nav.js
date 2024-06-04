@@ -28,17 +28,18 @@ function NavBar() {
   const logout = () => {
     Cookies.remove("token");
     setLog(false);
+    localStorage.clear('token')
   };
 useEffect(()=>{
   if(localStorage.getItem('token')){
     setLog(true)
   }
-  const userInfoString = localStorage.getItem("userInfo");
-    if (userInfoString) {
-      const userData = JSON.parse(userInfoString);
-      setUserData(userData);
-      setLog(true);
-    }
+  // const userInfoString = localStorage.getItem("userInfo");
+  //   if (userInfoString) {
+  //     const userData = JSON.parse(userInfoString);
+  //     setUserData(userData);
+  //     setLog(true);
+  //   }
 },[])
   return (
     <>
