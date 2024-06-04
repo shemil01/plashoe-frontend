@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { FaCartPlus } from "react-icons/fa";
 import { RiContactsFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import myContext from "../UseContext/Context";
 import { TbLogout } from "react-icons/tb";
 import { SiAdminer } from "react-icons/si";
@@ -17,6 +17,7 @@ function NavBar() {
     setSearch,
     setLog,
     email,
+    setUserData,
 
     log,
 
@@ -28,7 +29,17 @@ function NavBar() {
     Cookies.remove("token");
     setLog(false);
   };
-
+useEffect(()=>{
+  if(localStorage.getItem('token')){
+    setLog(true)
+  }
+  const userInfoString = localStorage.getItem("userInfo");
+    if (userInfoString) {
+      const userData = JSON.parse(userInfoString);
+      setUserData(userData);
+      setLog(true);
+    }
+},[])
   return (
     <>
       <div className="navbarRespons">
