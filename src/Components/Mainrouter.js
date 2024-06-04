@@ -23,13 +23,16 @@ import AdminNav from "./Pages/Admin/Nav/AdminNav";
 import Product from "./Pages/Admin/Product";
 import axios from "axios";
 import SuccessPage from "./Pages/success";
-
+import Cookies from "js-cookie";
 import OrderDetails from "./Pages/Admin/Orders";
 import OrderById from "./Pages/Admin/orderById";
 import OrderTable from "./Datas/orderRecord";
 
 export const Axios = axios.create({
   baseURL: "https://backend-project-1-xcal.onrender.com/api",
+  headers: {
+    Authorization: Cookies.get("token"),
+  },
 });
 
 const Mainrouter = () => {

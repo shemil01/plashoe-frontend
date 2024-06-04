@@ -24,10 +24,10 @@ function NavBar() {
   } = useContext(myContext);
   const Navigate = useNavigate();
 
-  const logout=()=>{
-    Cookies.remove("token")
-   setLog(false)
-  }
+  const logout = () => {
+    Cookies.remove("token");
+    setLog(false);
+  };
 
   return (
     <>
@@ -114,11 +114,7 @@ function NavBar() {
                   </Link>
                 )}
 
-                {log && (
-                 
-                    <TbLogout  onClick={() => logout()}/>
-                  
-                )}
+                {log && <TbLogout onClick={() => logout()} />}
 
                 <Link to={"/adminform"}>
                   {}
