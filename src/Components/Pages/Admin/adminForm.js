@@ -37,6 +37,7 @@ const AdminForm = () => {
       })
       .catch((error) => {
         console.error(error);
+        toast.error("login failed",error)
       });
   };
   return (

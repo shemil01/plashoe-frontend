@@ -29,17 +29,17 @@ import OrderById from "./Pages/Admin/orderById";
 import OrderTable from "./Datas/orderRecord";
 
 export const Axios = axios.create({
-  baseURL: "http://localhost:3010/api",
+  baseURL: "https://backend-project-1-xcal.onrender.com/api",
 });
 
 const Mainrouter = () => {
   const [log, setLog] = useState(false);
   const [search, setSearch] = useState("");
-  const [userData, setUserData] = useState(UserData);
+  const [userData, setUserData] = useState([]);
   const [productData, setProductData] = useState(ProductData);
   const [email, setEmail] = useState("");
-  // const [adminData, setAdminData] = useState("");
-  // const [adminLog, setAdminLog] = useState(false);
+  const [adminData, setAdminData] = useState("");
+  const [adminLog, setAdminLog] = useState(false);
   const [cartItem, setCartItem] = useState([]);
 
   const details = {
@@ -51,10 +51,10 @@ const Mainrouter = () => {
     setUserData,
     email,
     setEmail,
-    // adminLog,
-    // setAdminLog,
-    // adminData,
-    // setAdminData,
+    adminLog,
+    setAdminLog,
+    adminData,
+    setAdminData,
     // logedUser,
     // setLogedUser,
     cartItem,

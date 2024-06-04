@@ -27,6 +27,7 @@ const Product = () => {
     description: "",
     price: "",
     image: null,
+    imageURL: "",
   });
 
   const [editProduct, setEditProduct] = useState({
@@ -36,6 +37,7 @@ const Product = () => {
     description: "",
     price: "",
     image: null,
+    imageURL: "",
   });
 
   useEffect(() => {
@@ -88,11 +90,16 @@ const Product = () => {
     formData.append("category", addProduct.category);
     formData.append("description", addProduct.description);
     formData.append("price", addProduct.price);
-    formData.append("image", addProduct.image);
+
+    if (addProduct.image) {
+      formData.append("image", addProduct.image);
+    } else if (addProduct.imageURL) {
+      formData.append("imageURl", addProduct.imageURL);
+    }
 
     await Axios.post("/admin/add", formData, { withCredentials: true })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         setShowAdd(false);
         fetchProducts();
         setAddProduct({
@@ -101,6 +108,7 @@ const Product = () => {
           description: "",
           price: "",
           image: null,
+          imageURL: "",
         });
       })
       .catch((error) => {
@@ -124,7 +132,10 @@ const Product = () => {
       <div className="productNav">
         <Link onClick={() => setShowAdd(true)}>Add Product</Link>
       </div>
-      <div className="modal show" style={{ display: "block", position: "initial" }}></div>
+      <div
+        className="modal show"
+        style={{ display: "block", position: "initial" }}
+      ></div>
       <div
         style={{
           display: "flex",
@@ -155,7 +166,10 @@ const Product = () => {
               >
                 Edit
               </MDBBtn>
-              <MDBBtn className="m-2 bg-danger" onClick={() => deleteProduct(value._id)}>
+              <MDBBtn
+                className="m-2 bg-danger"
+                onClick={() => deleteProduct(value._id)}
+              >
                 Delete
               </MDBBtn>
             </MDBCardBody>
@@ -177,7 +191,9 @@ const Product = () => {
               type="text"
               size="lg"
               // value={addProduct.name}
-              onChange={(e) => setAddProduct({ ...addProduct, name: e.target.value })}
+              onChange={(e) =>
+                setAddProduct({ ...addProduct, name: e.target.value })
+              }
             />
             <MDBInput
               style={{ color: "black" }}
@@ -188,7 +204,9 @@ const Product = () => {
               type="text"
               size="lg"
               // value={addProduct.category}
-              onChange={(e) => setAddProduct({ ...addProduct, category: e.target.value })}
+              onChange={(e) =>
+                setAddProduct({ ...addProduct, category: e.target.value })
+              }
             />
             {/* <MDBInput
               style={{ color: "black" }}
@@ -210,17 +228,31 @@ const Product = () => {
               type="text"
               size="lg"
               // value={addProduct.price}
-              onChange={(e) => setAddProduct({ ...addProduct, price: e.target.value })}
+              onChange={(e) =>
+                setAddProduct({ ...addProduct, price: e.target.value })
+              }
             />
-            <MDBInput
-              style={{ color: "black" }}
-              wrapperClass="mb-4"
-              labelClass="text-black"
-              label="Image"
-              id="formControlLg"
+            <input
               type="file"
-              size="lg"
-              onChange={(e) => setAddProduct({ ...addProduct, image: e.target.files[0] })}
+              onChange={(e) =>
+                setAddProduct({
+                  ...addProduct,
+                  image: e.target.files[0],
+                  imageURL: "",
+                })
+              }
+            />
+            <input
+              type="text"
+              value={addProduct.imageURL}
+              onChange={(e) =>
+                setAddProduct({
+                  ...addProduct,
+                  imageURL: e.target.value,
+                  image: null,
+                })
+              }
+              placeholder="Image URL"
             />
           </Modal.Body>
           <Modal.Footer>
@@ -248,7 +280,9 @@ const Product = () => {
               type="text"
               size="lg"
               value={editProduct.name}
-              onChange={(e) => setEditProduct({ ...editProduct, name: e.target.value })}
+              onChange={(e) =>
+                setEditProduct({ ...editProduct, name: e.target.value })
+              }
             />
             <MDBInput
               style={{ color: "black" }}
@@ -259,7 +293,9 @@ const Product = () => {
               type="text"
               size="lg"
               value={editProduct.category}
-              onChange={(e) => setEditProduct({ ...editProduct, category: e.target.value })}
+              onChange={(e) =>
+                setEditProduct({ ...editProduct, category: e.target.value })
+              }
             />
             <MDBInput
               style={{ color: "black" }}
@@ -270,7 +306,9 @@ const Product = () => {
               type="text"
               size="lg"
               value={editProduct.description}
-              onChange={(e) => setEditProduct({ ...editProduct, description: e.target.value })}
+              onChange={(e) =>
+                setEditProduct({ ...editProduct, description: e.target.value })
+              }
             />
             <MDBInput
               style={{ color: "black" }}
@@ -281,7 +319,9 @@ const Product = () => {
               type="text"
               size="lg"
               value={editProduct.price}
-              onChange={(e) => setEditProduct({ ...editProduct, price: e.target.value })}
+              onChange={(e) =>
+                setEditProduct({ ...editProduct, price: e.target.value })
+              }
             />
             <MDBInput
               style={{ color: "black" }}
@@ -291,7 +331,9 @@ const Product = () => {
               id="formControlLg"
               type="file"
               size="lg"
-              onChange={(e) => setEditProduct({ ...editProduct, image: e.target.files[0] })}
+              onChange={(e) =>
+                setEditProduct({ ...editProduct, image: e.target.files[0] })
+              }
             />
           </Modal.Body>
           <Modal.Footer>

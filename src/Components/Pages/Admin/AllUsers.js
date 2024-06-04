@@ -10,6 +10,7 @@ import {
 } from "mdb-react-ui-kit";
 import { Axios } from "../../Mainrouter";
 import { Link, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const UserInfo = () => {
   // const { userData } = useContext(myContext);
@@ -23,6 +24,7 @@ const UserInfo = () => {
       })
       .catch((error) => {
         console.error("User fetching error", error);
+        toast.error("User fetching error", error);
       });
   }, []);
 
