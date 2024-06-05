@@ -22,16 +22,29 @@ const Cart = () => {
 
   const navigate = useNavigate();
   const { logedUser, cartItem, setCartItem } = useContext(myContext);
+  // useEffect(() => {
+  //   Axios.get("/user/viewCart", { withCredentials: true })
+  //     .then((response) => {
+  //       console.log(response)
+  //       setCartItem(response.data.cart);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Cart fetching error", error);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    Axios.get("/user/viewCart", { withCredentials: true })
-      .then((response) => {
-        console.log(response)
-        setCartItem(response.data.cart
-        );
-      })
-      .catch((error) => {
-        console.error("Cart fetching error", error);
-      });
+    const fetchCart = async () => {
+      try {
+        const response = await Axios.get("user/viewCart", { withCredentials: true });
+        console.log("Cart Response:", response);
+        setCartItem(response.data.cart);
+      } catch (error) {
+        console.error("Cart fetching error:", error);
+      }
+    };
+
+    fetchCart();
   }, []);
 
   const decreaseQuantity = (itemId) => {
