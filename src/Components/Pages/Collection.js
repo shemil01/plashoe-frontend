@@ -54,6 +54,7 @@ const Collection = () => {
       
       {withCredentials:true}
     )
+    toast.success("Product added to cart")
 .catch((error)=>{
   toast.error("please login and continue")
   // navigate("/login");
