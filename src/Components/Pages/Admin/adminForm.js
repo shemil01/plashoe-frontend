@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import myContext from "../../../UseContext/Context";
 import { Axios } from "../../Mainrouter";
+import Cookies from "js-cookie";
 
 const AdminForm = () => {
   // const [loginEmail, setLoginEmail] = useState([]);
@@ -30,6 +31,14 @@ const AdminForm = () => {
     }
     Axios.post("/admin/login", admin, { withCredentials: true })
       .then((response) => {
+        const { token, refreshToken,admin } = response.data;
+        Cookies.set("token", token, { expires: 1 });
+        localStorage.setItem("token", token);
+        Cookies.set("refreshToken",refreshToken, { expires: 1 });
+        localStorage.setItem("refreshToken",refreshToken);
+        const adminInfo = JSON.stringify(admin);
+        localStorage.setItem("adminInfo", adminInfo);
+        toast.success(response.data.message);
         toast.success(response.data.message);
         setAdminData(admin);
         setAdminLog(true);
