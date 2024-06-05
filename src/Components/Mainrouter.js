@@ -22,7 +22,6 @@ import AdminNav from "./Pages/Admin/Nav/AdminNav";
 import Product from "./Pages/Admin/Product";
 import axios from "axios";
 import SuccessPage from "./Pages/success";
-import Cookies from "js-cookie";
 import OrderDetails from "./Pages/Admin/Orders";
 import OrderById from "./Pages/Admin/orderById";
 import OrderTable from "./Datas/orderRecord";

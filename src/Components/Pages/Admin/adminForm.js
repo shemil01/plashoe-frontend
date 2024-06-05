@@ -32,6 +32,8 @@ const AdminForm = () => {
     Axios.post("/admin/login", admin, { withCredentials: true })
       .then((response) => {
         const { token, refreshToken,admin } = response.data;
+console.log("res:",response.data)
+
         Cookies.set("token", token, { expires: 1 });
         localStorage.setItem("token", token);
         Cookies.set("refreshToken",refreshToken, { expires: 1 });
