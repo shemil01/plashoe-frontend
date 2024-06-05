@@ -28,18 +28,20 @@ function NavBar() {
   const logout = () => {
     Cookies.remove("token");
     setLog(false);
-    localStorage.clear('token')
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
+    setUserData(null);
   };
 useEffect(()=>{
   if(localStorage.getItem('token')){
     setLog(true)
   }
-  // const userInfoString = localStorage.getItem("userInfo");
-  //   if (userInfoString) {
-  //     const userData = JSON.parse(userInfoString);
-  //     setUserData(userData);
-  //     setLog(true);
-  //   }
+  const userInfoString = localStorage.getItem("userInfo");
+    if (userInfoString) {
+      const userData = JSON.parse(userInfoString);
+      setUserData(userData);
+      setLog(true);
+    }
 },[])
   return (
     <>
