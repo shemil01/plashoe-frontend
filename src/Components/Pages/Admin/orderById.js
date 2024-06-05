@@ -25,7 +25,7 @@ console.log(userId);
         
         console.log(response);
 
-        // setAllOrders(response.data);
+        setAllOrders(response.data);
 
       })
       .catch((error) => {

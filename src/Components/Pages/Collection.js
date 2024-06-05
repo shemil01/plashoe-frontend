@@ -28,7 +28,7 @@ const Collection = () => {
     async function Data() {
       await Axios.get("/user/product")
         .then((response) => {
-          if(search==""){setProdata(response.data)}
+          if(search===""){setProdata(response.data)}
           setProducts(response.data);
         })
         .catch((error) => {

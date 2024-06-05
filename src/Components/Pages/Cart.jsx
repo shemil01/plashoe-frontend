@@ -25,7 +25,9 @@ const Cart = () => {
   useEffect(() => {
     Axios.get("/user/viewCart", { withCredentials: true })
       .then((response) => {
-        setCartItem(response.data.cart);
+        console.log(response)
+        setCartItem(response.data.cart
+        );
       })
       .catch((error) => {
         console.error("Cart fetching error", error);
@@ -125,7 +127,7 @@ const Cart = () => {
                             <div className="d-flex align-items-center mb-5">
                               <div className="flex-shrink-0">
                                 <MDBCardImage
-                                  src={value.productId.image}
+                                  src={value?.productId?.image}
                                   fluid
                                   style={{ width: "150px" }}
                                   alt="Generic placeholder image"
@@ -140,7 +142,7 @@ const Cart = () => {
                                   tag="h5"
                                   className="text-primary"
                                 >
-                                  {value.productId.name}
+                                  {value?.productId?.name}
                                 </MDBTypography>
 
                                 <div className="d-flex align-items-center">
