@@ -53,8 +53,10 @@ const Collection = () => {
       {productId:product._id},
       
       {withCredentials:true}
-    )
-    toast.success("Product added to cart")
+    ).then((response)=>{
+
+      toast.success("Product added to cart")
+    })
 .catch((error)=>{
   toast.error("please login and continue")
   // navigate("/login");
