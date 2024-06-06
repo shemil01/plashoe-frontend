@@ -37,7 +37,7 @@ const Cart = () => {
     const fetchCart = async () => {
       try {
         const response = await Axios.get("user/viewCart", { withCredentials: true });
-        console.log("Cart Response:", response);
+        console.log("Cart Response:", response.data.cart);
         setCartItem(response.data.cart);
       } catch (error) {
         console.error("Cart fetching error:", error);
