@@ -56,7 +56,7 @@ const Cart = () => {
       }
     )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
 
         setCartItem((prevItems) =>
           prevItems.map((item) =>

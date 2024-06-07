@@ -20,7 +20,7 @@ const Collection = () => {
   // const cartItems = useSelector((state) => state.cart.cartItems);
   UseTitle("collection");
 
-  const { search,} = useContext(myContext);
+  const { search,setLog} = useContext(myContext);
   const [proData, setProdata] = useState([]);
   const [products, setProducts] = useState([]);
 
@@ -48,19 +48,22 @@ const Collection = () => {
 
 
   const AddToCart =async (product) => {
-   
-    await Axios.post("/user/addcart",
-      {productId:product._id},
-      
-      {withCredentials:true}
-    ).then((response)=>{
+   if(setLog(true)){
 
-      toast.success("Product added to cart")
-    })
-.catch((error)=>{
-  toast.error("please login and continue")
-  // navigate("/login");
-})
+     await Axios.post("/user/addcart",
+       {productId:product._id},
+       
+       {withCredentials:true}
+     ).then((response)=>{
+ 
+       toast.success("Product added to cart")
+     })
+ .catch((error)=>{
+   toast.error("please login and continue")
+   // navigate("/login");
+ })
+    
+   }
 
 
   };
