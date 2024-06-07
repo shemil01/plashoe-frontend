@@ -16,11 +16,10 @@ import toast from "react-hot-toast";
 
 import { Axios } from "../Mainrouter";
 const Collection = () => {
- 
   // const cartItems = useSelector((state) => state.cart.cartItems);
   UseTitle("collection");
 
-  const { search,setLog} = useContext(myContext);
+  const { search, log } = useContext(myContext);
   const [proData, setProdata] = useState([]);
   const [products, setProducts] = useState([]);
 
@@ -28,7 +27,9 @@ const Collection = () => {
     async function Data() {
       await Axios.get("/user/product")
         .then((response) => {
-          if(search===""){setProdata(response.data)}
+          if (search === "") {
+            setProdata(response.data);
+          }
           setProducts(response.data);
         })
         .catch((error) => {
@@ -39,33 +40,28 @@ const Collection = () => {
   }, []);
 
   useEffect(() => {
-    const result=products.filter((element)=>{
-      return element.name.toLowerCase().includes(search.toLowerCase())
+    const result = products.filter((element) => {
+      return element.name.toLowerCase().includes(search.toLowerCase());
     });
-    search===""?setProdata(products):setProdata(result)
+    search === "" ? setProdata(products) : setProdata(result);
   }, [search]);
 
+  const AddToCart = async (product) => {
+    if (log) {
+      await Axios.post(
+        "/user/addcart",
+        { productId: product._id },
 
-
-  const AddToCart =async (product) => {
-   if(setLog(true)){
-
-     await Axios.post("/user/addcart",
-       {productId:product._id},
-       
-       {withCredentials:true}
-     ).then((response)=>{
- 
-       toast.success("Product added to cart")
-     })
- .catch((error)=>{
-   toast.error("please login and continue")
-   // navigate("/login");
- })
-    
-   }
-
-
+        { withCredentials: true }
+      )
+        .then((response) => {
+          toast.success("Product added to cart");
+        })
+        .catch((error) => {
+          toast.error("please login and continue");
+          
+        });
+    }
   };
 
   return (
