@@ -55,7 +55,7 @@ const Home = () => {
         <div>
           <img
             src="https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/recycled-shoe-store-hero-image-bg.jpg);"
-            className="image-dec"
+            className="image-dec img-fluid img-thumbnail"
           />
           <div className="img-text">
             <p>

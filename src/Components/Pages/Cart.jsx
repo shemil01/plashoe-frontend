@@ -194,7 +194,7 @@ const Cart = () => {
                               >
                                 <MDBTypography
                                   tag="h5"
-                                  className="fw-bold mb-0"
+                                  className="fw-bold mb-0 "
                                 >
                                   Total:
                                 </MDBTypography>
