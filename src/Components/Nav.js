@@ -30,7 +30,7 @@ function NavBar() {
     setLog(false);
     localStorage.removeItem("token");
     localStorage.removeItem("userInfo");
-    setUserData(null);
+    setUserData(' ');
   };
 useEffect(()=>{
   if(localStorage.getItem('token')){
