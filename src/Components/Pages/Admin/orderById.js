@@ -17,16 +17,13 @@ const OrderById = () => {
   const [allOrders, setAllOrders] = useState([]);
 
   const { userId } = useParams();
-console.log(userId);
+  // console.log(userId);
   useEffect(() => {
     Axios.get(`/admin/ordersid/${userId}`, { withCredentials: true })
       .then((response) => {
-        
-        
-        console.log(response);
+        // console.log(response);
 
         setAllOrders(response.data);
-
       })
       .catch((error) => {
         console.log("Orders fetching error", error);
