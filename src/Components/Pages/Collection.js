@@ -14,9 +14,10 @@ import Footer from "../Footer";
 import myContext from "../../UseContext/Context";
 import toast from "react-hot-toast";
 
-import { Axios } from "../Mainrouter";
+import { Axios } from "../Mainrouter";     
+
 const Collection = () => {
-  // const cartItems = useSelector((state) => state.cart.cartItems);
+ 
   UseTitle("collection");
 
   const { search, log } = useContext(myContext);

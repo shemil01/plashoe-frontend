@@ -238,7 +238,7 @@ function NavBar() {
               </Nav.Link>
               <Nav.Link as={Link} to="/Cart" className="icons">
                 <FaCartPlus />
-                <span className="cart-count">{cartItem.length}</span>
+                {/* <span className="cart-count">{cartItem.length}</span> */}
               </Nav.Link>
               {log && (
                 <Nav.Link as="span" className="icons" onClick={logout}>
