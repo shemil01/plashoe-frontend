@@ -47,6 +47,27 @@ const Cart = () => {
     fetchCart();
   }, []);
 
+
+  const increaseQuantity=(itemId)=>{
+    Axios.put(`/user/increase/${itemId.productId._id}`,
+      {},{
+        withCredentials:true
+      }
+    )
+    .then((response)=>{
+      setCartItem((prevItems)=>
+        prevItems.map((item)=>
+          item.productId._id === itemId.productId._id
+          ?{...item,quantity:item.quantity +1}
+          : item
+        )
+      )
+    })
+    .catch((error)=>{
+      console.log("product increasing error",error)
+    })
+  }
+
   const decreaseQuantity = (itemId) => {
     Axios.put(
       `/user/decrease/${itemId.productId._id}`,
@@ -175,7 +196,9 @@ const Cart = () => {
                                       {" "}
                                       {value.quantity || 1}{" "}
                                     </p>
-                                    <MDBBtn className="plus">+</MDBBtn>
+                                    <MDBBtn className="plus"
+                                    onClick={()=>increaseQuantity(value)}
+                                    >+</MDBBtn>
                                   </div>
                                 </div>
                               </div>
