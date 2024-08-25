@@ -25,6 +25,7 @@ import SuccessPage from "./Pages/success";
 import OrderDetails from "./Pages/Admin/Orders";
 import OrderById from "./Pages/Admin/orderById";
 import OrderTable from "./Datas/orderRecord";
+// import Cookies from 'js-cookie'
 
 export const Axios = axios.create({
   baseURL: "https://backend-project-1-xcal.onrender.com/api",

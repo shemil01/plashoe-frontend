@@ -1,181 +1,64 @@
-  /* .image-dec {
-    background-position: 50%;
-    background-size: cover;
-    height: 40rem;
-    width: 100%;
-  }
-  .img-text {
-    color: white;
-    font-family: Poppins, sans-serif;
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1.1em;
-    --mdb-text-opacity: 1;
-    margin-top: -430px;
-    margin-left: 110px;
-  }
-  .img-text2 {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    color: white;
-    margin-left: 110px;
-  }
-  .shop-btn {
-    margin-left: 130px;
-  }
-  #mhovbtn:hover {
-    background-color: white;
-    color: black;
-  }
-  #mhovbtn2:hover {
-    background-color: white;
-    color: black;
-  }
-  .homeItem {
-    margin-top: 200px;
-    margin-left: 50px;
-  }
-  .productsItem {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  } */
-/* Responsive Image and Text */
-.image-dec {
-  background-position: center;
-  background-size: cover;
-  height: 40rem;
-  width: 100%;
+.main-image {
   position: relative;
-}
-
-.img-text,
-.img-text2 {
+  text-align: center;
   color: white;
-  font-family: Poppins, sans-serif;
-  position: absolute;
-  left: 10%;
 }
 
 .img-text {
   font-size: 3rem;
-  font-weight: 700;
-  top: 30%;
+  font-weight: bold;
+  color: #fff;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-bottom: 2rem; /* Add margin for spacing */
+  line-height: 1.2;
 }
 
 .img-text2 {
-  top: 45%;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  color: #fff;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 20px; /* Adjust space between text */
 }
 
 .shop-btn {
   position: absolute;
-  top: 55%;
-  left: 10%;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 30px; /* Space between buttons */
 }
 
-#shop-btn {
-  display: flex;
-  gap: 1rem;
+.mhovbtn, .mhovbtn2 {
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
-#mhovbtn:hover,
-#mhovbtn2:hover {
-  background-color: white;
-  color: black;
+.mhovbtn:hover, .mhovbtn2:hover {
+  background-color: #ffffff;
+  color: #333;
 }
 
-/* Flexbox for Product Items */
 .homeItem {
-  margin: 2rem 0;
-  padding: 0 2rem;
+  padding: 50px;
+  text-align: center;
 }
 
 .productsItem {
   display: flex;
+  justify-content: center;
+  gap: 20px;
   flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 1.5rem;
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 1200px) {
-  .img-text {
-    font-size: 2.5rem;
-    top: 25%;
-  }
-
-  .img-text2 {
-    font-size: 1.2rem;
-    top: 40%;
-  }
-
-  .shop-btn {
-    top: 50%;
-  }
-}
-
-@media (max-width: 992px) {
-  .img-text {
-    font-size: 2rem;
-    top: 20%;
-  }
-
-  .img-text2 {
-    font-size: 1rem;
-    top: 35%;
-  }
-
-  .shop-btn {
-    top: 45%;
-  }
-
-  .productsItem {
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .img-text {
-    font-size: 1.5rem;
-    top: 15%;
-  }
-
-  .img-text2 {
-    font-size: 0.9rem;
-    top: 30%;
-  }
-
-  .shop-btn {
-    top: 40%;
-  }
-
-  .productsItem {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-@media (max-width: 576px) {
-  .img-text {
-    font-size: 1.2rem;
-    top: 10%;
-  }
-
-  .img-text2 {
-    font-size: 0.8rem;
-    top: 25%;
-  }
-
-  .shop-btn {
-    top: 35%;
-    flex-direction: column;
-  }
-
-  .homeItem {
-    padding: 0 1rem;
-  }
+h4 {
+  margin-bottom: 40px;
+  font-size: 2rem;
 }

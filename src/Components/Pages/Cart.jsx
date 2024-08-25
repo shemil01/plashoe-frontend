@@ -22,16 +22,7 @@ const Cart = () => {
 
   const navigate = useNavigate();
   const { logedUser, cartItem, setCartItem } = useContext(myContext);
-  // useEffect(() => {
-  //   Axios.get("/user/viewCart", { withCredentials: true })
-  //     .then((response) => {
-  //       console.log(response)
-  //       setCartItem(response.data.cart);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Cart fetching error", error);
-  //     });
-  // }, []);
+ 
 
   useEffect(() => {
     const fetchCart = async () => {
